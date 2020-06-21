@@ -8,7 +8,6 @@ import { useAuth } from 'use-auth0-hooks'
 const Home = () => {
     return (
         <Layout boxed={false}>
-            <h1>Welcome to Ownemployed 👋</h1>
             <Hero />
             <Actions />
             <Initiative />
