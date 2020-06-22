@@ -2,8 +2,8 @@ import React from 'react'
 import { Box } from 'rebass'
 import { Field } from 'formik'
 import Select from 'react-select'
-import Checkbox from 'components/Checkbox'
-import Text from 'components/Text'
+import Checkbox from 'components/common/Checkbox'
+import Text from 'components/common/Text'
 
 const DetailedInfo = ({
     defaultNormalInputFieldStyle,

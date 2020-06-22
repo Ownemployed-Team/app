@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from 'emotion'
 import { Flex } from 'rebass'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import { Label, Checkbox as RebassCheckbox } from '@rebass/forms'
 
 function Checkbox({ field, checked, onChange, text }) {

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Box, Button, Flex, Image } from 'rebass'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import { useConfig } from 'config/Context'
 import { uploadImage } from 'lib/media'
 
@@ -105,7 +105,7 @@ function UploadImage({
                                 sx={{
                                     width: ['100%'],
                                 }}
-                            ></Image>
+                            />
                         </Box>
                     )}
                 </Box>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Image } from 'rebass'
 import { Field } from 'formik'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import ImageUploader from 'components/common/ImageUploader'
 
 const AvatarImage = ({
@@ -74,7 +74,7 @@ const AvatarImage = ({
                     className={normalInputField}
                     name="education"
                     placeholder="Education"
-                ></Field>
+                />
                 <Text as="body">Add education</Text>
                 {errors.education && touched.education ? (
                     <Text
@@ -116,7 +116,7 @@ const AvatarImage = ({
                 <ImageUploader
                     isTextAboveBrowseButton
                     onUploadedImage={onUploadedImage}
-                ></ImageUploader>
+                />
             </Box>
         </Box>
     </Flex>

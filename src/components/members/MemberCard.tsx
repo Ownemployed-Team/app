@@ -1,7 +1,7 @@
 import React from 'react'
-import Card from 'components/Card'
+import Card from 'components/common/Card'
 import Link from 'next/link'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import { Box, Image } from 'rebass'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 

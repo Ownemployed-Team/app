@@ -1,6 +1,6 @@
 import React from 'react'
-import Card from 'components/Card'
-import { Text } from 'components/Text'
+import Card from 'components/common/Card'
+import { Text } from 'components/common/Text'
 
 const Hero = () => {
     return (

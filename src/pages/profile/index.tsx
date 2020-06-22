@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import GET_ME from 'graphql/get-me'
 import { Member } from 'generated/graphql'
 
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 //import { useRegisterMember } from 'hooks/useRegisterMember'
 import { NewMemberInput } from 'generated/graphql'
 import { ExecutionResult } from 'apollo-boost'
@@ -119,6 +119,7 @@ const Profile = ({ auth }) => {
 
 const withAuthHOC = withAuth((Profile as unknown) as ComponentClass<any, any>)
 
-export default withLoginRequired(
-    (withAuthHOC as unknown) as ComponentClass<any, any>
-)
+export default withLoginRequired((withAuthHOC as unknown) as ComponentClass<
+    any,
+    any
+>)

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Label, Input } from '@rebass/forms'
 import Link from 'next/link'
-import Text from '../../components/Text'
+import Text from '../../components/common/Text'
 import Button from '../../components/common/Button'
 
 const buttonStyles = {

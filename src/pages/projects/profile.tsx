@@ -3,8 +3,8 @@ import * as React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import GET_PROJECT from 'graphql/get-project'
 
-import Card from 'components/Card'
-import Text from 'components/Text'
+import Card from 'components/common/Card'
+import Text from 'components/common/Text'
 import { Box, Flex, Image } from 'rebass'
 
 const ProjectProfile = ({ match }) => {
@@ -206,7 +206,7 @@ const ProjectProfile = ({ match }) => {
                             <Flex flexWrap="wrap">
                                 {[1, 2, 3, 4].map(() => (
                                     <Box width={[1 / 2]} sx={{ my: 2 }}>
-                                        <Image src="/imgs/illustrations/mentor.svg"></Image>
+                                        <Image src="/imgs/illustrations/mentor.svg" />
                                         <Text
                                             as="body"
                                             sx={{ textAlign: 'center' }}
@@ -225,13 +225,13 @@ const ProjectProfile = ({ match }) => {
                                                 <Image
                                                     width="30px"
                                                     src="/imgs/social-media/linkedin.svg"
-                                                ></Image>
+                                                />
                                             </Box>
                                             <Box>
                                                 <Image
                                                     width="30px"
                                                     src="/imgs/social-media/facebook.svg"
-                                                ></Image>
+                                                />
                                             </Box>
                                         </Flex>
                                     </Box>

@@ -3,7 +3,7 @@ import { Box, Flex } from 'rebass'
 //import Link from 'components/Link'
 import Link from 'next/link'
 
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 
 export const Footer = ({ ...props }) => {
     return (
@@ -43,7 +43,7 @@ export const Footer = ({ ...props }) => {
             <Box>
                 <Text as="h3">Contact</Text>
                 <Text sx={{ color: 'muted' }}>
-                    <a href="mailto:ownemployed@gmail.com"></a>
+                    <a href="mailto:ownemployed@gmail.com" />
                     ownemployed@gmail.com
                 </Text>
             </Box>

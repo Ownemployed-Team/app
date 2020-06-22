@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import Button from 'components/common/Button'
 
-import Link from 'components/Link'
+import Link from 'components/common/Link'
 import { SxStyleProp } from 'rebass'
 
 type NavLinkProps = {

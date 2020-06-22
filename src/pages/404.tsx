@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Flex, Box, Image } from 'rebass'
 import { withRouter } from 'next/router'
 
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import Button from 'components/common/Button'
 import Layout from 'components/layout/Layout'
 

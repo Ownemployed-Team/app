@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from 'rebass'
 import { Field } from 'formik'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 
 const BasicInfo = ({
     areaInputField,
@@ -71,7 +71,7 @@ const BasicInfo = ({
                         name="userType"
                         type="radio"
                         value="true"
-                    ></Field>
+                    />
                     Yes, I'm interested in working remotely
                 </Box>
                 <Box m={2} width={[1 / 2, 1 / 2, 1]}>
@@ -80,7 +80,7 @@ const BasicInfo = ({
                         name="userType"
                         type="radio"
                         value="false"
-                    ></Field>
+                    />
                     No, I only want to work with people in my location.
                 </Box>
             </Box>

@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate'
 import { Box, Flex } from 'rebass'
 import { css } from 'emotion'
 
-import ItemsCount from 'components/ItemsCount'
+import ItemsCount from 'components/pagination/ItemsCount'
 
 const pagination = css`
     display: inline-block;

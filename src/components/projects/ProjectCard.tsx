@@ -1,6 +1,6 @@
 import React from 'react'
-import Card from 'components/Card'
-import Text from 'components/Text'
+import Card from 'components/common/Card'
+import Text from 'components/common/Text'
 import { Box, Flex, Image } from 'rebass'
 import { Label } from '@rebass/forms'
 // Avatar as RebassAvatar,

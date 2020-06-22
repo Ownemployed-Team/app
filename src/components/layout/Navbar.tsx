@@ -24,7 +24,7 @@ const Brand = () => {
 
 export default function Navbar() {
     const { pathname, query } = useRouter()
-    const { isAuthenticated, isLoading, login, logout } = useAuth()
+    const { isAuthenticated = false, isLoading, login, logout } = useAuth()
 
     return (
         <Flex className={links} px={5} py={2} bg="white" alignItems="center">
@@ -68,9 +68,7 @@ export default function Navbar() {
                     </Button>
                 ))}
             <Link href="/projects/create-project">
-                <a>
-                    <Button>Start a project</Button>
-                </a>
+                <a>Start a project</a>
             </Link>{' '}
         </Flex>
     )

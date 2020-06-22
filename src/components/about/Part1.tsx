@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex } from 'rebass'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 
 const Part1 = () => (
     <Flex

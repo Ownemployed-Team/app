@@ -3,10 +3,10 @@ import * as React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import GET_USER from 'graphql/get-member'
 
-import Card from 'components/Card'
+import Card from 'components/common/Card'
 import Button from 'components/common/Button'
-import ProjectCard from 'components/ProjectCard'
-import Text from 'components/Text'
+import ProjectCard from 'components/projects/ProjectCard'
+import Text from 'components/common/Text'
 import { Box, Flex, Image } from 'rebass'
 
 const MemberProfile = ({ match }) => {

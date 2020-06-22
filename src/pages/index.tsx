@@ -1,6 +1,6 @@
 import { Flex, Box, Image } from 'rebass'
 import Link from 'next/link'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import Layout from 'components/layout/Layout'
 import Button from 'components/common/Button'
 import { useAuth } from 'use-auth0-hooks'
@@ -92,7 +92,7 @@ function Hero() {
                             width: '100%',
                         }}
                         src="/imgs/illustrations/homepage-ideas.svg"
-                    ></Image>
+                    />
                 </Box>
             </Flex>
         </>
@@ -225,7 +225,7 @@ function Initiative() {
                         display: ['none', 'none', 'block'],
                     }}
                     src="/imgs/illustrations/social.svg"
-                ></Image>
+                />
             </Box>
             <Box width={[1, 1, 1 / 2]} mb={[0, 0, 5]}>
                 <Text as="h2" sx={{ my: 2 }}>
@@ -300,7 +300,7 @@ function Reasons() {
                                 width: '30%',
                             }}
                             src={reason.icon}
-                        ></Image>
+                        />
                         <Text as="h3">{reason.title}</Text>
                         <Text>{reason.body}</Text>
                     </Box>
@@ -336,7 +336,7 @@ function Skills() {
                         width: '100%',
                     }}
                     src="/imgs/illustrations/board.svg"
-                ></Image>
+                />
             </Box>
         </Flex>
     )
@@ -381,7 +381,7 @@ function CallToAction() {
                         display: ['none', 'none', 'block'],
                         width: '100%',
                     }}
-                ></Image>
+                />
             </Box>
         </Flex>
     )

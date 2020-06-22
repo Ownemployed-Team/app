@@ -4,12 +4,12 @@ import { Box } from 'rebass'
 import { useLazyQuery } from '@apollo/react-hooks'
 import GET_PROJECTS from 'graphql/get-projects'
 
-import ItemsCount from 'components/ItemsCount'
-import Pagination from 'components/Pagination'
-import ProjectFilter from 'components/ProjectFilter'
+import ItemsCount from 'components/pagination/ItemsCount'
+import Pagination from 'components/pagination/Pagination'
+import ProjectFilter from 'components/projects/ProjectFilter'
 import Hero from 'components/projects/Hero'
 import ProjectsList from 'components/projects/ProjectsList'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import InfiniteScroll from 'react-infinite-scroller'
 
 const AllProjects = () => {

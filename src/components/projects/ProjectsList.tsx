@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex } from 'rebass'
-import ProjectCard from 'components/ProjectCard'
+import ProjectCard from 'components/projects/ProjectCard'
 
 const ProjectsList = ({ projects }) => {
     return (

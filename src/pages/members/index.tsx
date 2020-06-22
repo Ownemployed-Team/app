@@ -8,11 +8,11 @@ import { GET_MEMBERS } from 'graphql/get-members'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import Hero from 'components/members/Hero'
-import ItemsCount from 'components/ItemsCount'
+import ItemsCount from 'components/pagination/ItemsCount'
 import MemberFilter from 'components/members/MemberFilter'
 import MembersList from 'components/members/MembersList'
-import Pagination from 'components/Pagination'
-import Text from 'components/Text'
+import Pagination from 'components/pagination/Pagination'
+import Text from 'components/common/Text'
 
 const Members = () => {
     const [pageIndex, setPageIndex] = useState(1)

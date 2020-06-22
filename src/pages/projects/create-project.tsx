@@ -9,9 +9,9 @@ import * as Yup from 'yup'
 import { Formik, Form, Field } from 'formik'
 import { Box } from 'rebass'
 import Select from 'react-select'
-import Card from 'components/Card'
+import Card from 'components/common/Card'
 import Button from 'components/common/Button'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import ImageUploader from 'components/common/ImageUploader'
 
 import sectorData from 'data/sector.json'
@@ -345,7 +345,7 @@ const CreateProject = () => {
                                             options={locationOptions}
                                             placeholder={'Locations'}
                                             styles={styles}
-                                        ></Field>
+                                        />
                                         {/* <Select
                                             className={selectLocation}
                                             classNamePrefix="select"

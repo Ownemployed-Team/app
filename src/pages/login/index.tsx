@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Image } from 'rebass'
-import Layout from '../../components/layout/Layout'
+import Layout from 'components/layout/Layout'
 import MembershipForm from './membershipForm'
 
 interface LoginPageProps {}

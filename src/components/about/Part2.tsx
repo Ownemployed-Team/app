@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from 'components/common/Button'
-import Text from 'components/Text'
+import Text from 'components/common/Text'
 import Link from 'next/link'
 import { Box, Flex } from 'rebass'
 import { useAuth } from 'use-auth0-hooks'
