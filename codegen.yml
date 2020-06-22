@@ -1,5 +1,6 @@
 overwrite: true
-schema: "schema.graphql"
+#schema: "schema.graphql"
+schema: "https://ownemployed-api.herokuapp.com/api/v1/graphql"
 documents: "src/graphql/**/*"
 generates:
   src/generated/graphql.tsx:

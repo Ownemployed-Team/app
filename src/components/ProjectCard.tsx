@@ -4,7 +4,7 @@ import Text from 'components/Text'
 import { Box, Flex, Image } from 'rebass'
 import { Label } from '@rebass/forms'
 // Avatar as RebassAvatar,
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { colors } from '../utils/colors'
 import { UniqueInputFieldNamesRule } from 'graphql'
 
@@ -28,7 +28,7 @@ const ProjectCard = ({ project }) => {
     )
 
     return (
-        <Link to={`/projects/${id}`} style={{ textDecoration: 'none' }}>
+        <Link href={`/projects/${id}`} style={{ textDecoration: 'none' }}>
             <Card variant="secondary">
                 <Image src={transformedAvatar} width={'100%'} m={'auto'} />
                 <Box

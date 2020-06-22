@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 
-import Layout from 'components/Layout'
+import Layout from 'components/layout/Layout'
 
 const TermsOfUse = () => {
     const markdown = `

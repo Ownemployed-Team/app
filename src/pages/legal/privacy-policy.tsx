@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { Text, Flex, Box } from 'rebass'
 
-import Layout from 'components/Layout'
+import Layout from 'components/layout/Layout'
 import ReactMarkdown from 'react-markdown'
 
 function Heading() {

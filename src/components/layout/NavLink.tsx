@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react'
-import Button from 'components/Button'
+import Button from 'components/common/Button'
 
 import Link from 'components/Link'
 import { SxStyleProp } from 'rebass'
@@ -45,7 +45,7 @@ export const NavLink: FunctionComponent<NavLinkProps> = ({
 
     return (
         <Link
-            to={to}
+            href={to}
             sx={{
                 textDecoration: 'none',
                 padding: '0px 10px 0px',

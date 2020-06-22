@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from 'components/Button'
+import Button from 'components/common/Button'
 import Text from 'components/Text'
 import Link from 'next/link'
 import { Box, Flex } from 'rebass'

@@ -4,14 +4,23 @@ import { css } from 'emotion'
 import { useRouter } from 'next/router'
 import { useAuth } from 'use-auth0-hooks'
 
-import Button from 'components/Button'
+import Button from 'components/common/Button'
 
 const links = css`
     a {
-        color: #ddd;
-        margin: 0 1em;
+        margin: 0 0.5em;
     }
 `
+
+const Brand = () => {
+    return (
+        <Link href="/">
+            <a>
+                <Image alt="logo" src="/ownemployed_logo.png" width="245px" />
+            </a>
+        </Link>
+    )
+}
 
 export default function Navbar() {
     const { pathname, query } = useRouter()
@@ -19,15 +28,7 @@ export default function Navbar() {
 
     return (
         <Flex className={links} px={5} py={2} bg="white" alignItems="center">
-            <Link href="/">
-                <a>
-                    <Image
-                        alt="logo"
-                        src="/ownemployed_logo.png"
-                        width="245px"
-                    />
-                </a>
-            </Link>
+            <Brand />
             <Box mx="auto" />
             <Link href="/projects">
                 <a>Explore</a>
@@ -38,9 +39,7 @@ export default function Navbar() {
             <Link href="/learn">
                 <a>Learn</a>
             </Link>{' '}
-            <a href="https://ownemployed.tribe.so/">
-                <a>Community</a>
-            </a>{' '}
+            <a href="https://ownemployed.tribe.so/">Community</a>{' '}
             {!isLoading &&
                 (isAuthenticated ? (
                     <>

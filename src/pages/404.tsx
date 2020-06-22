@@ -3,8 +3,8 @@ import { Flex, Box, Image } from 'rebass'
 import { withRouter } from 'next/router'
 
 import Text from 'components/Text'
-import Button from 'components/Button'
-import Layout from 'components/Layout'
+import Button from 'components/common/Button'
+import Layout from 'components/layout/Layout'
 
 export const NoMatch = ({ router }) => {
     return (

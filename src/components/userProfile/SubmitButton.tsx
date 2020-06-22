@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from 'rebass'
-import Button from 'components/Button'
+import Button from 'components/common/Button'
 
 const SubmitButton = ({ onSubmitForm }) => (
     <Box

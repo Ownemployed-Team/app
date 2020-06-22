@@ -1,50 +1,30 @@
 import Link from 'next/link'
-import Layout from 'components/Layout'
+import Layout from 'components/layout/Layout'
 import { useRouter } from 'next/router'
-import { generateUserSlugs } from 'lib/url'
-import { connection } from 'config/database'
+import { useQuery } from '@apollo/react-hooks'
+import GET_MEMBER from 'graphql/get-member'
 
-const MemberProfile = ({ member }) => {
+const MemberProfile = () => {
     const router = useRouter()
 
     const { slug } = router.query
 
+    const result = useQuery(GET_MEMBER, {
+        variables: {
+            id: slug,
+        },
+    })
+
+    const { loading, data, called } = result
+    if (loading && called) {
+        return <Layout>loading user details</Layout>
+    }
+
     return (
-        <Layout title={`Account | ${member.name}`}>
-            <h1>{member.name}</h1>
-            <p>{member.email}</p>
-            <p>
-                <Link href="/">
-                    <a>Go back?</a>
-                </Link>
-            </p>
+        <Layout title={`Account | ${slug}`}>
+            lorem ipsum dolor sit memeberk
         </Layout>
     )
 }
 
 export default MemberProfile
-
-export async function getServerSideProps(context) {
-    const { slug } = context.params
-
-    const [member] = await connection.select('*').from('members').where({
-        id: slug,
-    })
-
-    const {
-        created_at,
-        updated_at,
-        first_name,
-        last_name,
-        ...memberData
-    } = member
-
-    return {
-        props: {
-            member: {
-                name: `${first_name} ${last_name}`,
-                ...memberData,
-            },
-        },
-    }
-}

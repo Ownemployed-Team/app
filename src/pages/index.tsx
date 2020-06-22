@@ -1,8 +1,8 @@
 import { Flex, Box, Image } from 'rebass'
 import Link from 'next/link'
 import Text from 'components/Text'
-import Layout from 'components/Layout'
-import Button from 'components/Button'
+import Layout from 'components/layout/Layout'
+import Button from 'components/common/Button'
 import { useAuth } from 'use-auth0-hooks'
 
 const Home = () => {

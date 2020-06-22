@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import { Flex, Box } from 'rebass'
-import Button from 'components/Button'
+import Button from 'components/common/Button'
 import Text from 'components/Text'
-import Layout from 'components/Layout'
+import Layout from 'components/layout/Layout'
 
 export const Privacy = ({ match }) => {
     return (

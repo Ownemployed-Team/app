@@ -10,7 +10,7 @@ import { Formik, Form, Field } from 'formik'
 import { Box } from 'rebass'
 import Select from 'react-select'
 import Card from 'components/Card'
-import Button from 'components/Button'
+import Button from 'components/common/Button'
 import Text from 'components/Text'
 import ImageUploader from 'components/common/ImageUploader'
 

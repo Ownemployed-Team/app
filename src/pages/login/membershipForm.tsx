@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import { Label, Input } from '@rebass/forms'
-import { Link } from 'components/Link'
+import Link from 'next/link'
 import Text from '../../components/Text'
-import Button from '../../components/Button'
+import Button from '../../components/common/Button'
 import './index.css'
 
 const buttonStyles = {
@@ -87,7 +87,7 @@ export default class MembershipForm extends PureComponent<any> {
                     />
                     <br />
                     <br />
-                    <Link to="/forgot" variant="secondary" sx={forgotStyles}>
+                    <Link href="/forgot" variant="secondary" sx={forgotStyles}>
                         Forgotten Password?
                     </Link>
                     <br />

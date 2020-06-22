@@ -13,26 +13,36 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
 };
 
-export type AddContributorsInput = {
-  id: Scalars['String'];
-  contributorIds: Array<Scalars['String']>;
+export type Query = {
+  __typename?: 'Query';
+  getMembers?: Maybe<Array<Maybe<Member>>>;
+  getMember?: Maybe<Member>;
+  getProjects?: Maybe<Array<Maybe<Project>>>;
+  getProject?: Maybe<Project>;
 };
 
+
+export type QueryGetMembersArgs = {
+  data?: Maybe<GetMembersInput>;
+};
+
+
+export type QueryGetMemberArgs = {
+  id?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGetProjectArgs = {
+  id?: Maybe<Scalars['String']>;
+};
 
 export type GetMembersInput = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-};
-
-export type Location = {
-  __typename?: 'Location';
-  id: Scalars['String'];
-  name: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
 };
 
 export type Member = {
@@ -56,13 +66,49 @@ export type Member = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type MemberSocialMediaInput = {
+
+export type Project = {
+  __typename?: 'Project';
+  id: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
   name: Scalars['String'];
-  url: Scalars['String'];
+  owner: Member;
+  contributors?: Maybe<Array<Maybe<Member>>>;
+  summary?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  location?: Maybe<Array<Maybe<Location>>>;
+  remote?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tags?: Maybe<Array<Maybe<Tag>>>;
+  picture?: Maybe<Scalars['String']>;
+  website?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type MemberTagInput = {
+export type Location = {
+  __typename?: 'Location';
   id: Scalars['String'];
+  name: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type Tag = {
+  __typename?: 'Tag';
+  id: Scalars['String'];
+  title?: Maybe<Scalars['String']>;
+  category?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type SocialMedia = {
+  __typename?: 'SocialMedia';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  url: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Mutation = {
@@ -133,91 +179,9 @@ export type NewMemberInput = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type NewProjectInput = {
-  name: Scalars['String'];
-  ownerId: Scalars['String'];
-  contributors?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  remote?: Maybe<Scalars['Boolean']>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
-  picture?: Maybe<Array<Maybe<Scalars['String']>>>;
-  website?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type Project = {
-  __typename?: 'Project';
-  id: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
-  name: Scalars['String'];
-  owner: Member;
-  contributors?: Maybe<Array<Maybe<Member>>>;
-  summary?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  location?: Maybe<Array<Maybe<Location>>>;
-  remote?: Maybe<Array<Maybe<Scalars['String']>>>;
-  tags?: Maybe<Array<Maybe<Tag>>>;
-  picture?: Maybe<Scalars['String']>;
-  website?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  getMembers?: Maybe<Array<Maybe<Member>>>;
-  getMember?: Maybe<Member>;
-  getProjects?: Maybe<Array<Maybe<Project>>>;
-  getProject?: Maybe<Project>;
-};
-
-
-export type QueryGetMembersArgs = {
-  data?: Maybe<GetMembersInput>;
-};
-
-
-export type QueryGetMemberArgs = {
-  id?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryGetProjectArgs = {
-  id?: Maybe<Scalars['String']>;
-};
-
-export type RemoveContributorsInput = {
-  id: Scalars['String'];
-  contributorIds: Array<Scalars['String']>;
-};
-
-export type RemoveMemberInput = {
-  id?: Maybe<Scalars['String']>;
-};
-
-export type RemoveProjectsInput = {
-  ownerId: Scalars['String'];
-  projectIds: Array<Scalars['String']>;
-  soft?: Maybe<Scalars['Boolean']>;
-};
-
-export type SocialMedia = {
-  __typename?: 'SocialMedia';
-  id: Scalars['String'];
+export type MemberSocialMediaInput = {
   name: Scalars['String'];
   url: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
-};
-
-export type Tag = {
-  __typename?: 'Tag';
-  id: Scalars['String'];
-  title?: Maybe<Scalars['String']>;
-  category?: Maybe<Scalars['String']>;
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
 };
 
 export type UpdateMemberInput = {
@@ -244,8 +208,27 @@ export type UpdateMemberSocialMediaInput = {
   url?: Maybe<Scalars['String']>;
 };
 
-export type UpdateMemberTagInput = {
-  id: Scalars['String'];
+export type RemoveMemberInput = {
+  id?: Maybe<Scalars['String']>;
+};
+
+export type NewProjectInput = {
+  name: Scalars['String'];
+  ownerId: Scalars['String'];
+  contributors?: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  remote?: Maybe<Scalars['Boolean']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  picture?: Maybe<Array<Maybe<Scalars['String']>>>;
+  website?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type RemoveProjectsInput = {
+  ownerId: Scalars['String'];
+  projectIds: Array<Scalars['String']>;
+  soft?: Maybe<Scalars['Boolean']>;
 };
 
 export type UpdateProjectInput = {
@@ -260,6 +243,24 @@ export type UpdateProjectInput = {
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   picture?: Maybe<Scalars['String']>;
   website?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type AddContributorsInput = {
+  id: Scalars['String'];
+  contributorIds: Array<Scalars['String']>;
+};
+
+export type RemoveContributorsInput = {
+  id: Scalars['String'];
+  contributorIds: Array<Scalars['String']>;
+};
+
+export type MemberTagInput = {
+  id: Scalars['String'];
+};
+
+export type UpdateMemberTagInput = {
+  id: Scalars['String'];
 };
 
 export type AddProjectMutationVariables = Exact<{
