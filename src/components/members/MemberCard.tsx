@@ -54,7 +54,7 @@ const MemberCard = ({
     // )
 
     return (
-        <Link href={`/members/${id}`} style={{ textDecoration: 'none' }}>
+        <Link href={`/members/${id}`}>
             <Card variant="secondary" sx={{ bg: 'white' }}>
                 <Image src={avatarUrl} width={200} m={'auto'} p={4} />
                 <Box

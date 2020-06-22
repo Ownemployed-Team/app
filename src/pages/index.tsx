@@ -63,13 +63,7 @@ function Hero() {
                         </Text>
                     </Box>
                     <Box my={2}>
-                        <Link
-                            href="/projects"
-                            sx={{
-                                fontSize: 'body',
-                                pt: 6,
-                            }}
-                        >
+                        <Link href="/projects">
                             <Button
                                 sx={{
                                     height: '72px',

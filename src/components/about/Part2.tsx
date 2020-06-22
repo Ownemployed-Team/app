@@ -38,13 +38,12 @@ const Part2 = () => {
                         }}
                     >
                         <Box m={2}>
-                            <Link
-                                href=""
+                            <Button
                                 sx={{ width: '286px' }}
                                 onClick={() => login({})}
                             >
                                 Create an account
-                            </Link>
+                            </Button>
                         </Box>
                         <Box m={2}>
                             <Link href="/projects/">

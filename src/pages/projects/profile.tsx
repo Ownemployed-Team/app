@@ -5,11 +5,10 @@ import GET_PROJECT from 'graphql/get-project'
 
 import Card from 'components/Card'
 import Text from 'components/Text'
-import { useParams } from 'react-router-dom'
 import { Box, Flex, Image } from 'rebass'
 
 const ProjectProfile = ({ match }) => {
-    const { projectProfileId } = useParams()
+    const projectProfileId = ''
     const result = useQuery(GET_PROJECT, {
         variables: {
             projectId: projectProfileId,

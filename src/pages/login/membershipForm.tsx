@@ -3,7 +3,6 @@ import { Label, Input } from '@rebass/forms'
 import Link from 'next/link'
 import Text from '../../components/Text'
 import Button from '../../components/common/Button'
-import './index.css'
 
 const buttonStyles = {
     width: '100%',
@@ -87,9 +86,7 @@ export default class MembershipForm extends PureComponent<any> {
                     />
                     <br />
                     <br />
-                    <Link href="/forgot" variant="secondary" sx={forgotStyles}>
-                        Forgotten Password?
-                    </Link>
+                    <Link href="/forgot">Forgotten Password?</Link>
                     <br />
                     <Button type="submit" sx={buttonStyles}>
                         Sign Up

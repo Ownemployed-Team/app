@@ -5,6 +5,8 @@ const GET_MEMBER = gql`
     query getMember($id: String!) {
         getMember(id: $id) {
             id
+            name
+            email
             firstName
             lastName
             createdAt

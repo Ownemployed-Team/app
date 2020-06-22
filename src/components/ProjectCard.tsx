@@ -5,7 +5,6 @@ import { Box, Flex, Image } from 'rebass'
 import { Label } from '@rebass/forms'
 // Avatar as RebassAvatar,
 import Link from 'next/link'
-import { colors } from '../utils/colors'
 import { UniqueInputFieldNamesRule } from 'graphql'
 
 const ProjectCard = ({ project }) => {
@@ -28,7 +27,7 @@ const ProjectCard = ({ project }) => {
     )
 
     return (
-        <Link href={`/projects/${id}`} style={{ textDecoration: 'none' }}>
+        <Link href={`/projects/${id}`}>
             <Card variant="secondary">
                 <Image src={transformedAvatar} width={'100%'} m={'auto'} />
                 <Box

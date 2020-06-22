@@ -39,6 +39,8 @@ const CreateUserSchema = Yup.object().shape({
 })
 
 const Profile = ({ match }) => {
+    return null
+    /*
     const [profileImage, setProfileImage] = useState('')
     const [avatarImage, setAvatarImage] = useState('')
     const [showResult, setShowResult] = useState(false)
@@ -53,27 +55,6 @@ const Profile = ({ match }) => {
         value: id,
         label: name,
     }))
-
-    const { apiURL } = useContext(ConfigContext)
-
-    const callApi = async () => {
-        try {
-            const token = accessToken
-
-            const response = await fetch(`${apiURL}/graphql`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-
-            const responseData = await response.json()
-
-            setShowResult(true)
-            setApiMessage(responseData)
-        } catch (error) {
-            console.error(error)
-        }
-    }
 
     const handleUploadedImage = image => {
         //profile image should be saved to database while avatar image is just for viewing.
@@ -297,7 +278,6 @@ const Profile = ({ match }) => {
                         </Formik>
                     </Box>
                     <Link href={`${match.url}/settings`}>Settings</Link>
-                    <button onClick={callApi}>Ping API</button>
                     {showResult && (
                         <code>{JSON.stringify(apiMessage, null, 2)}</code>
                     )}
@@ -305,6 +285,7 @@ const Profile = ({ match }) => {
             </Card>
         </Box>
     )
+    */
 }
 
 export default Profile

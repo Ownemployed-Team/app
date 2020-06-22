@@ -16,13 +16,20 @@ const MemberProfile = () => {
     })
 
     const { loading, data, called } = result
+
     if (loading && called) {
         return <Layout>loading user details</Layout>
     }
 
+    const {
+        getMember: { name, email, socialMedia, education },
+    } = data
+
     return (
-        <Layout title={`Account | ${slug}`}>
-            lorem ipsum dolor sit memeberk
+        <Layout title={`Account | ${name}`}>
+            {name}
+            <br />
+            {email}
         </Layout>
     )
 }

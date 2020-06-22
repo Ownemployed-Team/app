@@ -1,15 +1,15 @@
 import Link from 'next/link'
 import Layout from 'components/layout/Layout'
 
-const Projects = ({ projects }) => (
-    <Layout title="Ownemployed | About">
+const Projects = () => (
+    <Layout title="Ownemployed | Explore">
         <h1>Projects</h1>
         <ul>
-            {projects.map(project => {
+            {[].map(project => {
                 return (
                     <li>
                         <Link href="[id]">
-                            <a>{projects.name}</a>
+                            <a>{project.name}</a>
                         </Link>
                     </li>
                 )

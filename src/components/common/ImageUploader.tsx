@@ -17,7 +17,8 @@ function UploadImage({
 }: UploadImageProps) {
     const [loading, setLoading] = useState(false)
     const [uploadedImage, setUploadedImage] = useState(undefined)
-    const { cloudinaryAPIEndpoint } = useConfig()
+    const { cloudinaryConfig } = useConfig()
+    const { cloudinaryAPIEndpoint } = cloudinaryConfig
     const uploadURL = `${cloudinaryAPIEndpoint}/image/upload`
 
     const onDrop = useCallback(

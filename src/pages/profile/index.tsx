@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react'
+import { useEffect, useState, memo, ComponentClass, ReactNode } from 'react'
 import { useAuth, withAuth, withLoginRequired } from 'use-auth0-hooks'
 import Link from 'next/link'
 import { Flex, Box } from 'rebass'
@@ -49,7 +49,7 @@ function useGetMemberFromAPI(email: string): Member | null {
     }
 }
 
-function Profile({ auth }) {
+const Profile = ({ auth }) => {
     const { user } = auth
     const { email } = user
 
@@ -117,4 +117,8 @@ function Profile({ auth }) {
     )
 }
 
-export default withLoginRequired(withAuth(Profile))
+const withAuthHOC = withAuth((Profile as unknown) as ComponentClass<any, any>)
+
+export default withLoginRequired(
+    (withAuthHOC as unknown) as ComponentClass<any, any>
+)

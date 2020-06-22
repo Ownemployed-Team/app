@@ -7,11 +7,10 @@ import Card from 'components/Card'
 import Button from 'components/common/Button'
 import ProjectCard from 'components/ProjectCard'
 import Text from 'components/Text'
-import { useParams } from 'react-router-dom'
 import { Box, Flex, Image } from 'rebass'
 
 const MemberProfile = ({ match }) => {
-    const { memberProfileId } = useParams()
+    const memberProfileId = ''
     const result = useQuery(GET_USER, {
         variables: {
             userId: memberProfileId,

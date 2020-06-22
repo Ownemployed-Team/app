@@ -6,3 +6,4 @@ tmp/
 temp/dist/
 dist/
 next.config.js
+out/
