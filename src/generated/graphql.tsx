@@ -366,7 +366,7 @@ export type GetMembersQuery = (
 );
 
 export type GetProjectQueryVariables = Exact<{
-  projectId: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
 
@@ -385,10 +385,7 @@ export type GetProjectQuery = (
   )> }
 );
 
-export type GetProjectsQueryVariables = Exact<{
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
-}>;
+export type GetProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetProjectsQuery = (
@@ -614,8 +611,8 @@ export function withGetMembers<TProps, TChildProps = {}, TDataName extends strin
 };
 export type GetMembersQueryResult = ApolloReactCommon.QueryResult<GetMembersQuery, GetMembersQueryVariables>;
 export const GetProjectDocument = gql`
-    query getProject($projectId: String!) {
-  getProject(id: $projectId) {
+    query getProject($id: String!) {
+  getProject(id: $id) {
     id
     name
     createdAt
@@ -652,7 +649,7 @@ export function withGetProject<TProps, TChildProps = {}, TDataName extends strin
 };
 export type GetProjectQueryResult = ApolloReactCommon.QueryResult<GetProjectQuery, GetProjectQueryVariables>;
 export const GetProjectsDocument = gql`
-    query getProjects($skip: Int, $take: Int) {
+    query getProjects {
   getProjects {
     id
     name

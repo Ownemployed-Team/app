@@ -5,13 +5,23 @@ import { Box, Flex, Image, Card } from 'rebass'
 import ProjectCard from 'components/projects/ProjectCard'
 
 import { useRouter } from 'next/router'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
-import GET_MEMBER from 'graphql/get-member'
+import { useQuery } from '@apollo/react-hooks'
 import { Member, Tag, Project } from 'generated/graphql'
 import GET_PROJECT from 'graphql/get-project'
+import { useUserContext } from 'context/UserContext'
+import Button from 'components/common/Button'
+
+const EditButton = ({ slug }) => {
+    return <Link href={`/projects/${slug}/edit`}>
+        <a>
+        Edit
+        </a>
+        </Link>
+}
 
 const ProjectProfile = () => {
     const router = useRouter()
+    const { user } = useUserContext()
 
     const { slug } = router.query
 
@@ -28,19 +38,15 @@ const ProjectProfile = () => {
         return <Layout>loading project details</Layout>
     }
 
-    console.log('data', data)
-
-   // const {
-   //     getProject,
-   //     //: { name, email, socialMedia, education, ownedProjects },
-   // } = data
-
     const project: Project = data?.getProject ?? {}
     const { name } = project
+
+    const canEdit = project.owner.id === user.id
 
     return (
         <Layout title={`Projects | ${name}`}>
             <Text as="h2">{name}</Text>
+                {canEdit ? <EditButton slug={slug}/> : null}
             <Flex mt={3}>
                 <code>{JSON.stringify(project)}</code>
             </Flex>

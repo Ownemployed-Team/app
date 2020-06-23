@@ -36,6 +36,9 @@ export const MyProjects = ({ auth }) => {
         return <Layout>Loading...</Layout>
     }
 
+    // TODO: filter this backend side
+    const filtered = projects.filter(p => p.owner.id === id)
+
     return (
         <Layout title="Ownemployed | My Projects">
             <Flex mx={-2} mt={3}>
@@ -45,7 +48,7 @@ export const MyProjects = ({ auth }) => {
 
                 <Box width={1 / 2}>
                     <Text as="h3">list</Text>
-                    <ProjectsList projects={projects}/>
+                    <ProjectsList projects={filtered}/>
                 </Box>
             </Flex>
         </Layout>
