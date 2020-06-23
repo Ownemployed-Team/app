@@ -1,19 +1,26 @@
-import { ComponentClass } from 'react'
+import { ComponentClass, FunctionComponent } from 'react'
 import Link from 'next/link'
-import { Flex, Box, Image } from 'rebass'
-import { withRouter } from 'next/router'
-
+import { Flex, Box, Card } from 'rebass'
 import Text from 'components/common/Text'
-import Button from 'components/common/Button'
 import Layout from 'components/layout/Layout'
-import ADD_PROJECT from 'graphql/add-project'
-import { useMutation, useQuery } from '@apollo/react-hooks'
-import { NewProjectInput, Member, Project } from 'generated/graphql'
-import GET_ME from 'graphql/get-me'
+import { useQuery } from '@apollo/react-hooks'
+import { Member, Project } from 'generated/graphql'
 import { withAuth, withLoginRequired } from 'use-auth0-hooks'
 import { useUserContext } from 'context/UserContext'
 import GET_PROJECTS from 'graphql/get-projects'
-import Projects from 'pages/projects'
+
+
+const ProjectsList: FunctionComponent<{
+    projects: Project[]
+}> = ({ projects = [] }) => {
+    return projects.map((p, index) => {
+        return <Link href={`/projects/${p.id}`}>
+        <a>
+        <Card key={index}>{p?.name ?? ''}</Card>
+        </a>
+        </Link>
+    })
+}
 
 export const MyProjects = ({ auth }) => {
     const { user }: { user: Member } = useUserContext()
@@ -30,20 +37,15 @@ export const MyProjects = ({ auth }) => {
     }
 
     return (
-        <Layout title="Ownemployed | Create Project">
+        <Layout title="Ownemployed | My Projects">
             <Flex mx={-2} mt={3}>
                 <Box width={1 / 2}>
-                    <Text as="h2">Create Project Result</Text>
+                    <Text as="h2">My Projects</Text>
                 </Box>
 
                 <Box width={1 / 2}>
                     <Text as="h3">list</Text>
-                    {
-    projects.map((p, index) => {
-            return <Box key={index}>{JSON.stringify(p)}</Box>
-
-    })
-    }
+                    <ProjectsList projects={projects}/>
                 </Box>
             </Flex>
         </Layout>
