@@ -2,8 +2,8 @@ import { gql } from 'apollo-boost'
 
 // Getting Project's profile data
 const GET_PROJECT = gql`
-    query getProject($projectId: String!) {
-        getProject(id: $projectId) {
+    query getProject($id: String!) {
+        getProject(id: $id) {
             id
             name
             createdAt

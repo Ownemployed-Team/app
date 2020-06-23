@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import { useAuth } from 'use-auth0-hooks'
 
 import Button from 'components/common/Button'
+import { useUserContext } from 'context/UserContext'
+import { clearStoredUser } from 'lib/user/storage'
 
 const links = css`
     a {
@@ -25,6 +27,9 @@ const Brand = () => {
 export default function Navbar() {
     const { pathname, query } = useRouter()
     const { isAuthenticated = false, isLoading, login, logout } = useAuth()
+
+    const userContext = useUserContext()
+    const { user } = useUserContext()
 
     return (
         <Flex className={links} px={5} py={2} bg="white" alignItems="center">
@@ -58,16 +63,23 @@ export default function Navbar() {
                     </>
                 ) : (
                     <Button
-                        onClick={() =>
+                        onClick={() => {
+                            clearStoredUser()
                             login({
-                                appState: { returnTo: { pathname, query } },
+                                appState: {
+                                    returnTo: {
+                                        pathname,
+                                        //pathname: `/profile`,
+                                        query,
+                                    },
+                                },
                             })
-                        }
+                        }}
                     >
                         Sign In
                     </Button>
                 ))}
-            <Link href="/projects/create-project">
+            <Link href="/profile/create-project">
                 <a>Start a project</a>
             </Link>{' '}
         </Flex>

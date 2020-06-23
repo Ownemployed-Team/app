@@ -10,8 +10,10 @@ import { Member } from 'generated/graphql'
 import Text from 'components/common/Text'
 //import { useRegisterMember } from 'hooks/useRegisterMember'
 import { NewMemberInput } from 'generated/graphql'
-import { ExecutionResult } from 'apollo-boost'
+import { ExecutionResult, StoreReader } from 'apollo-boost'
 import ADD_MEMBER from 'graphql/add-member'
+import { useUserContext } from 'context/UserContext'
+import { storeUser } from 'lib/user/storage'
 
 async function getUserFromAuth0() {}
 
@@ -50,51 +52,32 @@ function useGetMemberFromAPI(email: string): Member | null {
 }
 
 const Profile = ({ auth }) => {
-    const { user } = auth
-    const { email } = user
+    const { user, setUser } = useUserContext()
 
     const { accessToken } = useAuth({
         scope: 'read:self',
         audience: process.env.API_AUDIENCE,
     })
 
-    const { loading, called, data } = useQuery(GET_ME, {
-        variables: {
-            email: email,
-        },
-    })
+    if (!user) {
+        const { user: authUser } = auth
+        const { email } = authUser
+        const { loading, called, data } = useQuery(GET_ME, {
+            variables: {
+                email: email,
+            },
+        })
 
-    //    const [registerMember, registerResult] = useMutation(ADD_MEMBER)
-    //
-    //    console.log(apiMember)
-    //
-    //    //console.log('register result', registerResult)
-    //
-    //    useEffect(() => {
-    //        if (!apiMember) {
-    //            const newMemberData: NewMemberInput = {
-    //                lastName: user.family_name,
-    //                firstName: user.given_name,
-    //                email: user.email,
-    //                tags: [],
-    //            }
-    //
-    //            registerMember({ variables: { data: { ...newMemberData } } })
-    //                .then(res => {
-    //                    console.log(res)
-    //                })
-    //                .catch(err => {
-    //                    console.error(err)
-    //                })
-    //        }
-    //    }, [])
+        if (loading && called) {
+            return (
+                <Layout>
+                    <Text> Loading </Text>
+                </Layout>
+            )
+        }
 
-    if (loading && called) {
-        return (
-            <Layout>
-                <Text> Loading </Text>
-            </Layout>
-        )
+        setUser(data.me)
+        storeUser(data.me)
     }
 
     return (
@@ -111,8 +94,8 @@ const Profile = ({ auth }) => {
                     </Link>
                 </Box>
             </Flex>
-            <Text as="h1">{data.me.name}</Text>
-            <Text as="h4">{data.me.email}</Text>
+            <Text as="h1">{user.name}</Text>
+            <Text as="h4">{user.email}</Text>
         </Layout>
     )
 }
@@ -123,3 +106,28 @@ export default withLoginRequired((withAuthHOC as unknown) as ComponentClass<
     any,
     any
 >)
+
+//    const [registerMember, registerResult] = useMutation(ADD_MEMBER)
+//
+//    console.log(apiMember)
+//
+//    //console.log('register result', registerResult)
+//
+//    useEffect(() => {
+//        if (!apiMember) {
+//            const newMemberData: NewMemberInput = {
+//                lastName: user.family_name,
+//                firstName: user.given_name,
+//                email: user.email,
+//                tags: [],
+//            }
+//
+//            registerMember({ variables: { data: { ...newMemberData } } })
+//                .then(res => {
+//                    console.log(res)
+//                })
+//                .catch(err => {
+//                    console.error(err)
+//                })
+//        }
+//    }, [])

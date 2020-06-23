@@ -19,10 +19,16 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  me?: Maybe<Member>;
   getMembers?: Maybe<Array<Maybe<Member>>>;
   getMember?: Maybe<Member>;
   getProjects?: Maybe<Array<Maybe<Project>>>;
   getProject?: Maybe<Project>;
+};
+
+
+export type QueryMeArgs = {
+  email?: Maybe<Scalars['String']>;
 };
 
 
@@ -40,16 +46,12 @@ export type QueryGetProjectArgs = {
   id?: Maybe<Scalars['String']>;
 };
 
-export type GetMembersInput = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
 export type Member = {
   __typename?: 'Member';
   id: Scalars['String'];
   firstName: Scalars['String'];
   lastName?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
@@ -109,6 +111,11 @@ export type SocialMedia = {
   url: Scalars['String'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type GetMembersInput = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
 };
 
 export type Mutation = {
@@ -263,6 +270,26 @@ export type UpdateMemberTagInput = {
   id: Scalars['String'];
 };
 
+export type AddMemberMutationVariables = Exact<{
+  data?: Maybe<NewMemberInput>;
+}>;
+
+
+export type AddMemberMutation = (
+  { __typename?: 'Mutation' }
+  & { addMember?: Maybe<(
+    { __typename?: 'Member' }
+    & Pick<Member, 'id' | 'firstName' | 'lastName' | 'email'>
+    & { tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'id'>
+    )>>>, ownedProjects?: Maybe<Array<Maybe<(
+      { __typename?: 'Project' }
+      & Pick<Project, 'id' | 'name'>
+    )>>> }
+  )> }
+);
+
 export type AddProjectMutationVariables = Exact<{
   data?: Maybe<NewProjectInput>;
 }>;
@@ -280,6 +307,26 @@ export type AddProjectMutation = (
   )> }
 );
 
+export type MeQueryVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'Member' }
+    & Pick<Member, 'id' | 'name' | 'firstName' | 'lastName' | 'email' | 'createdAt' | 'education' | 'location'>
+    & { socialMedia?: Maybe<Array<Maybe<(
+      { __typename?: 'SocialMedia' }
+      & Pick<SocialMedia, 'name' | 'url'>
+    )>>>, tags?: Maybe<Array<Maybe<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'title'>
+    )>>> }
+  )> }
+);
+
 export type GetMemberQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -289,7 +336,7 @@ export type GetMemberQuery = (
   { __typename?: 'Query' }
   & { getMember?: Maybe<(
     { __typename?: 'Member' }
-    & Pick<Member, 'id' | 'firstName' | 'lastName' | 'createdAt' | 'education' | 'location'>
+    & Pick<Member, 'id' | 'name' | 'email' | 'firstName' | 'lastName' | 'createdAt' | 'education' | 'location'>
     & { socialMedia?: Maybe<Array<Maybe<(
       { __typename?: 'SocialMedia' }
       & Pick<SocialMedia, 'name' | 'url'>
@@ -363,6 +410,45 @@ export type GetProjectsQuery = (
 );
 
 
+export const AddMemberDocument = gql`
+    mutation addMember($data: NewMemberInput) {
+  addMember(data: $data) {
+    id
+    firstName
+    lastName
+    email
+    tags {
+      id
+    }
+    ownedProjects {
+      id
+      name
+    }
+  }
+}
+    `;
+export type AddMemberMutationFn = ApolloReactCommon.MutationFunction<AddMemberMutation, AddMemberMutationVariables>;
+export type AddMemberComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddMemberMutation, AddMemberMutationVariables>, 'mutation'>;
+
+    export const AddMemberComponent = (props: AddMemberComponentProps) => (
+      <ApolloReactComponents.Mutation<AddMemberMutation, AddMemberMutationVariables> mutation={AddMemberDocument} {...props} />
+    );
+    
+export type AddMemberProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<AddMemberMutation, AddMemberMutationVariables>
+    } & TChildProps;
+export function withAddMember<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddMemberMutation,
+  AddMemberMutationVariables,
+  AddMemberProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, AddMemberMutation, AddMemberMutationVariables, AddMemberProps<TChildProps, TDataName>>(AddMemberDocument, {
+      alias: 'addMember',
+      ...operationOptions
+    });
+};
+export type AddMemberMutationResult = ApolloReactCommon.MutationResult<AddMemberMutation>;
+export type AddMemberMutationOptions = ApolloReactCommon.BaseMutationOptions<AddMemberMutation, AddMemberMutationVariables>;
 export const AddProjectDocument = gql`
     mutation AddProject($data: NewProjectInput) {
   addProject(data: $data) {
@@ -400,10 +486,53 @@ export function withAddProject<TProps, TChildProps = {}, TDataName extends strin
 };
 export type AddProjectMutationResult = ApolloReactCommon.MutationResult<AddProjectMutation>;
 export type AddProjectMutationOptions = ApolloReactCommon.BaseMutationOptions<AddProjectMutation, AddProjectMutationVariables>;
+export const MeDocument = gql`
+    query me($email: String!) {
+  me(email: $email) {
+    id
+    name
+    firstName
+    lastName
+    email
+    createdAt
+    socialMedia {
+      name
+      url
+    }
+    tags {
+      title
+    }
+    education
+    location
+  }
+}
+    `;
+export type MeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>, 'query'> & ({ variables: MeQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const MeComponent = (props: MeComponentProps) => (
+      <ApolloReactComponents.Query<MeQuery, MeQueryVariables> query={MeDocument} {...props} />
+    );
+    
+export type MeProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<MeQuery, MeQueryVariables>
+    } & TChildProps;
+export function withMe<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  MeQuery,
+  MeQueryVariables,
+  MeProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, MeQuery, MeQueryVariables, MeProps<TChildProps, TDataName>>(MeDocument, {
+      alias: 'me',
+      ...operationOptions
+    });
+};
+export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
 export const GetMemberDocument = gql`
     query getMember($id: String!) {
   getMember(id: $id) {
     id
+    name
+    email
     firstName
     lastName
     createdAt
