@@ -8,19 +8,7 @@ import { Member, Project } from 'generated/graphql'
 import { withAuth, withLoginRequired } from 'use-auth0-hooks'
 import { useUserContext } from 'context/UserContext'
 import GET_PROJECTS from 'graphql/get-projects'
-
-
-const ProjectsList: FunctionComponent<{
-    projects: Project[]
-}> = ({ projects = [] }) => {
-    return projects.map((p, index) => {
-        return <Link href={`/projects/${p.id}`}>
-        <a>
-        <Card key={index}>{p?.name ?? ''}</Card>
-        </a>
-        </Link>
-    })
-}
+import ProjectsList from 'components/projects/ProjectsList'
 
 export const MyProjects = ({ auth }) => {
     const { user }: { user: Member } = useUserContext()
@@ -30,7 +18,7 @@ export const MyProjects = ({ auth }) => {
 
     const { loading, data, called } = result
 
-    const projects: Project[] = data?.getProjects ?? []
+    const projects: any[] = data?.getProjects ?? []
 
     if (loading && called) {
         return <Layout>Loading...</Layout>
@@ -41,13 +29,11 @@ export const MyProjects = ({ auth }) => {
 
     return (
         <Layout title="Ownemployed | My Projects">
-            <Flex mx={-2} mt={3}>
-                <Box width={1 / 2}>
+            <Flex px={4} mt={3} flexDirection="column">
+                <Box mt={4}>
                     <Text as="h2">My Projects</Text>
                 </Box>
-
-                <Box width={1 / 2}>
-                    <Text as="h3">list</Text>
+                <Box mt={4}>
                     <ProjectsList projects={filtered}/>
                 </Box>
             </Flex>

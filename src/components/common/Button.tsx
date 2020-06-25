@@ -7,6 +7,7 @@ const Button = ({
     onClick,
     sx,
     type,
+    ...rest
 }: {
     children: React.ReactNode
     variant?: string
@@ -19,10 +20,11 @@ const Button = ({
         <RebassButton
             onClick={onClick}
             variant={variant || 'primary'}
+            type={type}
             sx={{
                 ...sx,
             }}
-            type={type}
+            {...rest}
         >
             {children}
         </RebassButton>

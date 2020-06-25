@@ -1,12 +1,18 @@
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Flex, Box, Button } from 'rebass'
-import { Formik } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Input, Textarea } from '@rebass/forms'
+//import Button from 'components/common/Button'
 import Layout from 'components/layout/Layout'
+
 import { gql } from 'apollo-boost'
-import { UpdateProjectInput } from 'generated/graphql'
+import { UpdateProjectInput, Project } from 'generated/graphql'
 import { useUserContext } from 'context/UserContext'
 import { useMutation } from '@apollo/react-hooks'
 import Text from 'components/common/Text'
+import ImageUploader from 'components/common/ImageUploader'
+import MemberCard from 'components/members/MemberCard'
 
 const updateProjectMutation = gql`
     mutation UpdateProject($data: UpdateProjectInput!) {
@@ -26,13 +32,20 @@ const updateProjectMutation = gql`
 `
 
 const formInitialValues = {
+    id: '',
     name: '',
+    createdAt: '',
+    updatedAt: '',
+    summary: '',
+    description: '',
+    status: ``
 }
 
 export default () => {
     const router = useRouter()
     const { slug } = router.query
     const { user } = useUserContext()
+
 
     const m = useMutation(updateProjectMutation)
 
@@ -43,6 +56,13 @@ export default () => {
     const isUserLoaded = !user
     const isMutationRunning = loading
     const isLoading = isMutationRunning || isUserLoaded
+
+
+    const [projectImage, setProjectImage] = useState('')
+
+    const handleUploadedImage = imageUrl => {
+        setProjectImage(imageUrl)
+    }
 
     //if (loading && called) {
     if (isLoading) {
@@ -62,7 +82,6 @@ export default () => {
                         initialValues={formInitialValues}
                         onSubmit={async (values, { setSubmitting }) => {
                             try {
-                                console.log(values)
 
                                 const input: UpdateProjectInput = {
                                     id: slug as string,
@@ -83,12 +102,6 @@ export default () => {
                             }
                             //
                         }}
-                        // onSubmit={(values, { setSubmitting }) => {
-                        //     setTimeout(() => {
-                        //         alert(JSON.stringify(values, null, 2))
-                        //         setSubmitting(false)
-                        //     }, 400)
-                        // }}
                     >
                         {({
                             values,
@@ -99,19 +112,80 @@ export default () => {
                             handleSubmit,
                             isSubmitting,
                         }) => (
-                            <form onSubmit={handleSubmit}>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.name}
-                                />
-
-                                <Button type="submit" disabled={isSubmitting}>
-                                    Submit
-                                </Button>
-                            </form>
+                        <Form>
+                            <Box
+                                sx={{
+                                    borderRadius: 0,
+                                    borderBottom: '1px solid',
+                                }}
+                            >
+                                <Box sx={{ mx: [2, 4, 6] }}>
+                                    <Box my={4}>
+                                        <Field
+                                            name="name"
+                                            placeholder="Name"
+                                            as={Input}
+                                        />
+                                        {errors.name && touched.name ? (
+                                            <Text sx={{ color: 'red' }}>
+                                                {errors.name}
+                                            </Text>
+                                        ) : null}
+                                    </Box>
+                                    <Box my={4}>
+                                        <Field
+                                            as={Textarea}
+                                            name="summary"
+                                            placeholder="Summary"
+                                        />
+                                        <Text as="body">
+                                            Tell us about your project in 140
+                                            charachters or less.
+                                        </Text>
+                                        {errors.summary &&
+                                        touched.summary ? (
+                                            <Text sx={{ color: 'red' }}>
+                                                {errors.summary}
+                                            </Text>
+                                        ) : null}
+                                    </Box>
+                                    <Box my={4}>
+                                        <ImageUploader
+                                            onUploadedImage={
+                                                handleUploadedImage
+                                            }
+                                            isImageVisibleInBox
+                                        />
+                                    </Box>
+                                    <Box my={4}>
+                                        <Field
+                                            name="description"
+                                            placeholder="Description"
+                                        />
+                                        <Text as="body">
+                                            Describe the mission of your
+                                            project.
+                                        </Text>
+                                        {errors.description &&
+                                        touched.description ? (
+                                            <Text sx={{ color: 'red' }}>
+                                                {errors.description}
+                                            </Text>
+                                        ) : null}
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box mx={[2, 4, 6]}>
+                                <Box my={4} sx={{ textAlign: 'right' }}>
+                                    <Button sx={{ width: '265px' }}>
+                                        Create Project
+                                    </Button>
+                                </Box>
+                            </Box>
+                             <Button type="submit" disabled={isSubmitting}>
+                                Submit
+                             </Button>
+                        </Form>
                         )}
                     </Formik>
                 </Box>
@@ -119,6 +193,9 @@ export default () => {
         </Layout>
     )
 }
+
+
+
 
 //async function updateProject(values) {}
 
@@ -135,3 +212,103 @@ export default () => {
 //     }
 //     return errors
 // }}
+
+
+
+                            //<form onSubmit={handleSubmit}>
+                            //    <input
+                            //        type="text"
+                            //        name="name"
+                            //        onChange={handleChange}
+                            //        onBlur={handleBlur}
+                            //        value={values.name}
+                            //    />
+
+                            //    <Button type="submit" disabled={isSubmitting}>
+                            //        Submit
+                            //    </Button>
+                            //</form>
+
+
+
+                            /*
+                                    <Box my={4}>
+                                        <Field
+                                            className={selectLocation}
+                                            classNamePrefix="select"
+                                            closeMenuOnSelect={false}
+                                            component={Select}
+                                            isMulti={true}
+                                            name="location"
+                                            onChange={handleSelected(
+                                                'location',
+                                                setFieldValue
+                                            )}
+                                            options={locationOptions}
+                                            placeholder={'Locations'}
+                                            styles={styles}
+                                        />
+                                        {/* <Select
+                                            className={selectLocation}
+                                            classNamePrefix="select"
+                                            closeMenuOnSelect={false}
+                                            isMulti
+                                            name="location"
+                                            onChange={handleLocationSelected}
+                                            options={locationOptions}
+                                            placeholder={'Locations'}
+                                            styles={styles}
+                                            value={locations}
+                                        />}
+                                        {errors.location && touched.location ? (
+                                            <Text sx={{ color: 'red' }}>
+                                                {errors.location}
+                                            </Text>
+                                        ) : null}
+                                    </Box>
+                                    <Box my={4}>
+                                        <Field
+                                            className={selectLocation}
+                                            classNamePrefix="select"
+                                            closeMenuOnSelect={false}
+                                            component={Select}
+                                            isMulti
+                                            name="sectors"
+                                            onChange={handleSelected(
+                                                'sectors',
+                                                setFieldValue
+                                            )}
+                                            options={sectorOptions}
+                                            placeholder={'Sector'}
+                                            styles={styles}
+                                        />
+                                        {errors.sectors && touched.sectors ? (
+                                            <Text sx={{ color: 'red' }}>
+                                                {errors.sectors}
+                                            </Text>
+                                        ) : null}
+                                    </Box>
+                                    <Box my={4}>
+                                        <Field
+                                            className={selectLocation}
+                                            classNamePrefix="select"
+                                            closeMenuOnSelect={false}
+                                            component={Select}
+                                            isMulti
+                                            name="skillsRequired"
+                                            onChange={handleSelected(
+                                                'skillsRequired',
+                                                setFieldValue
+                                            )}
+                                            options={skillsOptions}
+                                            placeholder={'Skills'}
+                                            styles={styles}
+                                        />
+                                        {errors.skillsRequired &&
+                                        touched.skillsRequired ? (
+                                            <Text sx={{ color: 'red' }}>
+                                                {errors.skillsRequired}
+                                            </Text>
+                                        ) : null}
+                                    </Box>
+*/

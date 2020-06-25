@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { css } from 'emotion'
 import { useAuth } from 'use-auth0-hooks'
-import ConfigContext from 'config/Context'
+import ConfigContext from 'hooks/useConfig'
 import { Box } from 'rebass'
 import { Formik, Form } from 'formik'
 import skillsData from 'data/skills.json'

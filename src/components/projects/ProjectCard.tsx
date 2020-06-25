@@ -1,22 +1,13 @@
-import React from 'react'
 import Card from 'components/common/Card'
 import Text from 'components/common/Text'
 import { Box, Flex, Image } from 'rebass'
 import { Label } from '@rebass/forms'
-// Avatar as RebassAvatar,
 import Link from 'next/link'
 import { UniqueInputFieldNamesRule } from 'graphql'
+import { Project } from 'generated/graphql'
 
-const ProjectCard = ({ project }) => {
-    const {
-        description,
-        id,
-        name,
-        picture,
-        sectors,
-        shortDescription,
-        skillsRequired,
-    } = project
+const ProjectCard = ({ project }: { project: Project }) => {
+    const { id, name, description, picture, summary } = project
 
     // TODO : wait till cloudinary images is in database and use picture instead of hardcoded image.
     const avatar =
@@ -27,70 +18,43 @@ const ProjectCard = ({ project }) => {
     )
 
     return (
-        <Link href={`/projects/${id}`}>
-            <Card variant="secondary">
-                <Image src={transformedAvatar} width={'100%'} m={'auto'} />
-                <Box
-                    bg={'white'}
-                    sx={{
-                        minHeight: 280,
-                        mx: 'auto',
-                        p: 4,
-                    }}
-                >
-                    <Text as="h1" sx={{ fontSize: [16, 20, 20] }}>
-                        {name}
-                    </Text>
-                    <Text
-                        as="body"
-                        sx={{
-                            mb: 2,
-                            overflow: 'auto',
-                            textOverflow: 'ellipsis',
-                            maxHeight: 70,
-                        }}
-                    >
-                        {shortDescription}
-                    </Text>
-                    <Flex flexWrap={'wrap'}>
-                        {sectors &&
-                            sectors.map(({ title }) => (
-                                <Text
-                                    key={title}
-                                    sx={{
-                                        mr: 1,
-                                        p: 2,
-                                        borderRadius: '2px',
-                                        display: 'inline',
-                                        bg: '#124780',
-                                        color: 'white',
-                                        fontSize: '10px',
-                                    }}
-                                >
-                                    {title}
-                                </Text>
-                            ))}
-                        {skillsRequired &&
-                            skillsRequired.map(({ title }) => (
-                                <Text
-                                    key={title}
-                                    sx={{
-                                        mr: 1,
-                                        p: 2,
-                                        borderRadius: '2px',
-                                        display: 'inline',
-                                        bg: '#124780',
-                                        color: 'white',
-                                        fontSize: '10px',
-                                    }}
-                                >
-                                    {title}
-                                </Text>
-                            ))}
-                    </Flex>
-                </Box>
-            </Card>
-        </Link>
+        <Box px={0} py={0} width={[1, 1 / 3, 1 / 4]} mx={2} my={2}>
+            <Link href={`/projects/${id}`}>
+                <a>
+                    <Card variant="secondary">
+                        <Image
+                            src={transformedAvatar}
+                            width={'100%'}
+                            m={'auto'}
+                        />
+                        <Box
+                            bg={'white'}
+                            sx={{
+                                minHeight: 280,
+                                mx: 'auto',
+                                p: 4,
+                            }}
+                        >
+                            <Text as="h1" sx={{ fontSize: [16, 20, 20] }}>
+                                {name}
+                            </Text>
+                            <Text
+                                as="body"
+                                sx={{
+                                    mb: 2,
+                                    overflow: 'auto',
+                                    textOverflow: 'ellipsis',
+                                    maxHeight: 70,
+                                }}
+                            >
+                                {summary}
+                            </Text>
+                            <Flex flexWrap="wrap">Lorem ipsum</Flex>
+                        </Box>
+                    </Card>
+                </a>
+            </Link>
+        </Box>
     )
 }
 
