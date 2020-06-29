@@ -64,3 +64,8 @@ a:hover {
 a:active {
     text-decoration: none;
 }
+
+main{
+    /* background: plum; */
+    margin-top:24px ;
+}
