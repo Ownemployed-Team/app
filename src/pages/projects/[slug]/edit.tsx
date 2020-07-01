@@ -8,11 +8,10 @@ import Layout from 'components/layout/Layout'
 
 import { gql } from 'apollo-boost'
 import { UpdateProjectInput, Project } from 'generated/graphql'
-import { useUserContext } from 'context/UserContext'
 import { useMutation } from '@apollo/react-hooks'
 import Text from 'components/common/Text'
 import ImageUploader from 'components/common/ImageUploader'
-import MemberCard from 'components/members/MemberCard'
+import { Editable, EditableInput, EditablePreview, ButtonGroup, IconButton } from '@chakra-ui/core'
 
 const updateProjectMutation = gql`
     mutation UpdateProject($data: UpdateProjectInput!) {
@@ -41,11 +40,23 @@ const formInitialValues = {
     status: ``
 }
 
+ function EditableControls({ isEditing, onSubmit, onCancel, onRequestEdit }) {
+    return isEditing ? (
+      <ButtonGroup justifyContent="center" size="sm">
+        <IconButton icon="check" onClick={onSubmit} />
+        <IconButton icon="close" onClick={onCancel} />
+      </ButtonGroup>
+    ) : (
+      <Flex justifyContent="center">
+        <IconButton size="sm" icon="edit" onClick={onRequestEdit} />
+      </Flex>
+    );
+  }
+
+
 export default () => {
     const router = useRouter()
     const { slug } = router.query
-    const { user } = useUserContext()
-
 
     const m = useMutation(updateProjectMutation)
 
@@ -53,10 +64,8 @@ export default () => {
 
     const { loading, data, called } = result
 
-    const isUserLoaded = !user
     const isMutationRunning = loading
-    const isLoading = isMutationRunning || isUserLoaded
-
+    const isLoading = isMutationRunning
 
     const [projectImage, setProjectImage] = useState('')
 
@@ -69,6 +78,7 @@ export default () => {
         return <Layout>Loading...</Layout>
     }
 
+
     return (
         <Layout>
             <Flex mx={-3}>
@@ -76,124 +86,144 @@ export default () => {
                     <Text as="h3">Updated project data</Text>
                     {JSON.stringify(data?.updateProject ?? {})}
                 </Box>
-
-                <Box width={1 / 3}>
-                    <Formik
-                        initialValues={formInitialValues}
-                        onSubmit={async (values, { setSubmitting }) => {
-                            try {
-
-                                const input: UpdateProjectInput = {
-                                    id: slug as string,
-                                    name: values.name,
-                                    ownerId: user.id,
-                                }
-
-                                await updateProject({
-                                    variables: {
-                                        data: input,
-                                    },
-                                })
-
-                                setSubmitting(false)
-                            } catch (err) {
-                                console.log(err)
-                                setSubmitting(false)
-                            }
-                            //
-                        }}
-                    >
-                        {({
-                            values,
-                            errors,
-                            touched,
-                            handleChange,
-                            handleBlur,
-                            handleSubmit,
-                            isSubmitting,
-                        }) => (
-                        <Form>
-                            <Box
-                                sx={{
-                                    borderRadius: 0,
-                                    borderBottom: '1px solid',
-                                }}
-                            >
-                                <Box sx={{ mx: [2, 4, 6] }}>
-                                    <Box my={4}>
-                                        <Field
-                                            name="name"
-                                            placeholder="Name"
-                                            as={Input}
-                                        />
-                                        {errors.name && touched.name ? (
-                                            <Text sx={{ color: 'red' }}>
-                                                {errors.name}
-                                            </Text>
-                                        ) : null}
-                                    </Box>
-                                    <Box my={4}>
-                                        <Field
-                                            as={Textarea}
-                                            name="summary"
-                                            placeholder="Summary"
-                                        />
-                                        <Text as="body">
-                                            Tell us about your project in 140
-                                            charachters or less.
-                                        </Text>
-                                        {errors.summary &&
-                                        touched.summary ? (
-                                            <Text sx={{ color: 'red' }}>
-                                                {errors.summary}
-                                            </Text>
-                                        ) : null}
-                                    </Box>
-                                    <Box my={4}>
-                                        <ImageUploader
-                                            onUploadedImage={
-                                                handleUploadedImage
-                                            }
-                                            isImageVisibleInBox
-                                        />
-                                    </Box>
-                                    <Box my={4}>
-                                        <Field
-                                            name="description"
-                                            placeholder="Description"
-                                        />
-                                        <Text as="body">
-                                            Describe the mission of your
-                                            project.
-                                        </Text>
-                                        {errors.description &&
-                                        touched.description ? (
-                                            <Text sx={{ color: 'red' }}>
-                                                {errors.description}
-                                            </Text>
-                                        ) : null}
-                                    </Box>
-                                </Box>
-                            </Box>
-                            <Box mx={[2, 4, 6]}>
-                                <Box my={4} sx={{ textAlign: 'right' }}>
-                                    <Button sx={{ width: '265px' }}>
-                                        Create Project
-                                    </Button>
-                                </Box>
-                            </Box>
-                             <Button type="submit" disabled={isSubmitting}>
-                                Submit
-                             </Button>
-                        </Form>
-                        )}
-                    </Formik>
+                <Box>
+                    <Editable
+      textAlign="center"
+      defaultValue="Rasengan ⚡️"
+      fontSize="2xl"
+      isPreviewFocusable={false}
+      submitOnBlur={false}
+    >
+      {props => (
+        <>
+          <EditablePreview />
+          <EditableInput />
+          <EditableControls {...props} />
+        </>
+      )}
+    </Editable>
                 </Box>
             </Flex>
         </Layout>
     )
 }
 
+
+//
+//                <Box width={1 / 3}>
+//                    <Formik
+//                        initialValues={formInitialValues}
+//                        onSubmit={async (values, { setSubmitting }) => {
+//                            try {
+//
+//                                const input: UpdateProjectInput = {
+//                                    id: slug as string,
+//                                    name: values.name,
+//                                    ownerId: user.id,
+//                                }
+//
+//                                await updateProject({
+//                                    variables: {
+//                                        data: input,
+//                                    },
+//                                })
+//
+//                                setSubmitting(false)
+//                            } catch (err) {
+//                                console.log(err)
+//                                setSubmitting(false)
+//                            }
+//                            //
+//                        }}
+//                    >
+//                        {({
+//                            values,
+//                            errors,
+//                            touched,
+//                            handleChange,
+//                            handleBlur,
+//                            handleSubmit,
+//                            isSubmitting,
+//                        }) => (
+//                        <Form>
+//                            <Box
+//                                sx={{
+//                                    borderRadius: 0,
+//                                    borderBottom: '1px solid',
+//                                }}
+//                            >
+//                                <Box sx={{ mx: [2, 4, 6] }}>
+//                                    <Box my={4}>
+//                                        <Field
+//                                            name="name"
+//                                            placeholder="Name"
+//                                            as={Input}
+//                                        />
+//                                        {errors.name && touched.name ? (
+//                                            <Text sx={{ color: 'red' }}>
+//                                                {errors.name}
+//                                            </Text>
+//                                        ) : null}
+//                                    </Box>
+//                                    <Box my={4}>
+//                                        <Field
+//                                            as={Textarea}
+//                                            name="summary"
+//                                            placeholder="Summary"
+//                                        />
+//                                        <Text as="body">
+//                                            Tell us about your project in 140
+//                                            charachters or less.
+//                                        </Text>
+//                                        {errors.summary &&
+//                                        touched.summary ? (
+//                                            <Text sx={{ color: 'red' }}>
+//                                                {errors.summary}
+//                                            </Text>
+//                                        ) : null}
+//                                    </Box>
+//                                    <Box my={4}>
+//                                        <ImageUploader
+//                                            onUploadedImage={
+//                                                handleUploadedImage
+//                                            }
+//                                            isImageVisibleInBox
+//                                        />
+//                                    </Box>
+//                                    <Box my={4}>
+//                                        <Field
+//                                            name="description"
+//                                            placeholder="Description"
+//                                        />
+//                                        <Text as="body">
+//                                            Describe the mission of your
+//                                            project.
+//                                        </Text>
+//                                        {errors.description &&
+//                                        touched.description ? (
+//                                            <Text sx={{ color: 'red' }}>
+//                                                {errors.description}
+//                                            </Text>
+//                                        ) : null}
+//                                    </Box>
+//                                </Box>
+//                            </Box>
+//                            <Box mx={[2, 4, 6]}>
+//                                <Box my={4} sx={{ textAlign: 'right' }}>
+//                                    <Button sx={{ width: '265px' }}>
+//                                        Create Project
+//                                    </Button>
+//                                </Box>
+//                            </Box>
+//                             <Button type="submit" disabled={isSubmitting}>
+//                                Submit
+//                             </Button>
+//                        </Form>
+//                        )}
+//                    </Formik>
+//                </Box>
+//
+//
 
 
 

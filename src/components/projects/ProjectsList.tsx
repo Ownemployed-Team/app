@@ -1,15 +1,14 @@
-import Link from 'next/link'
-import { Flex } from 'rebass'
-import ProjectCard from 'components/projects/ProjectCard'
 import { Project } from 'generated/graphql'
+import Grid from 'components/common/Grid'
+import ProjectCard from 'components/projects/ProjectCard'
 
 const ProjectsList = ({ projects }: { projects: Project[] }) => {
     return (
-        <Flex flexWrap="wrap" px={3} mx={-2}>
+        <Grid>
             {projects.map((project, index) => (
                 <ProjectCard project={project} key={index} />
             ))}
-        </Flex>
+        </Grid>
     )
 }
 

@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode } from 'react'
-//import NextLink from 'next/link'
-import { Link as RebassLink, Box, SxStyleProp } from 'rebass'
+import NextLink from 'next/link'
+import { Link as ChakraLink } from '@chakra-ui/core'
 
 type LinkProps = {
     children: ReactNode
@@ -11,9 +11,15 @@ type LinkProps = {
     href: string
     variant?: string
 }
-const defaultStyles = {
-    textDecoration: 'none',
+
+const NextLinkWrapper = ({ href, children }) => {
+    return (
+        <NextLink href={href}>
+            <a>{children}</a>
+        </NextLink>
+    )
 }
+
 export const Link: FunctionComponent<LinkProps> = ({
     children,
     href,
@@ -23,23 +29,15 @@ export const Link: FunctionComponent<LinkProps> = ({
 }) => {
     if (href.startsWith('http') || href.startsWith('mailto')) {
         return (
-            <RebassLink
-                target="_blank"
-                href={href}
-                variant={variant || 'primary'}
-                sx={{ ...defaultStyles, ...sx }}
-                {...props}
-            >
+            <ChakraLink isExternal target="_blank" href={href} {...props}>
                 {children}
-            </RebassLink>
+            </ChakraLink>
         )
     } else {
         return (
-            <Link href={href} {...props}>
-                <RebassLink sx={{ display: 'inline', ...defaultStyles, ...sx }}>
-                    {children}
-                </RebassLink>
-            </Link>
+            <ChakraLink as={NextLinkWrapper} href={href}>
+                {children}
+            </ChakraLink>
         )
     }
 }

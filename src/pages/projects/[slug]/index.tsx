@@ -1,28 +1,20 @@
 import Link from 'next/link'
 import Layout from 'components/layout/Layout'
+import { Flex, Box, Stack, Heading, Tag } from '@chakra-ui/core'
+import Grid from 'components/common/Grid'
+import { Project } from 'generated/graphql'
 import Text from 'components/common/Text'
-import { Box, Flex, Image, Card } from 'rebass'
-import ProjectCard from 'components/projects/ProjectCard'
-
+import { FaMapMarkerAlt } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { Member, Tag, Project } from 'generated/graphql'
 import GET_PROJECT from 'graphql/get-project'
-import { useUserContext } from 'context/UserContext'
-import Button from 'components/common/Button'
+import Loading from 'components/layout/Loading'
 
-const EditButton = ({ slug }) => {
-    return <Link href={`/projects/${slug}/edit`}>
-        <a>
-        Edit
-        </a>
-        </Link>
-}
+function ProjectProfile() {
 
-const ProjectProfile = () => {
     const router = useRouter()
-    const { user } = useUserContext()
-
+    const [ userId, setUserId ] = useState(null)
     const { slug } = router.query
 
     const result = useQuery(GET_PROJECT, {
@@ -33,572 +25,121 @@ const ProjectProfile = () => {
 
     const { loading, data, called } = result
 
+    useEffect(() => {
+        const id = window?.localStorage?.getItem('user_id')
+        setUserId(id)
+    }, [])
+
+
+
+    if (!userId) {
+        return <Loading></Loading>
+    }
 
     if (loading && called) {
-        return <Layout>loading project details</Layout>
+        return <Loading></Loading>
     }
 
     const project: Project = data?.getProject ?? {}
     const { name } = project
 
-    const canEdit = project.owner.id === user.id
+    const canEdit = project.owner.id === userId
 
     return (
-        <Layout title={`Projects | ${name}`}>
-            <Text as="h2">{name}</Text>
-                {canEdit ? <EditButton slug={slug}/> : null}
-            <Flex mt={3}>
-                <code>{JSON.stringify(project)}</code>
-            </Flex>
-
-            {/*
-            <Box display={['block', 'block', 'flex']}>
-                <Box width={[1, 1, 1 / 3]}>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            p: 0,
-                            m: 4,
-                        }}
-                    >
-                        <Box sx={{ p: 4, borderBottom: '1px solid' }}>
-                            <Box sx={{ my: 2 }}>
-                                <Box
-                                    sx={{
-                                        width: '150px',
-                                        height: '150px',
-                                        borderRadius: '50%',
-                                        position: 'relative',
-                                        overflow: 'hidden',
-                                        margin: 'auto',
-                                        background: 'black',
-                                    }}
-                                >
-                                    <Image
-                                        sx={{
-                                            minWidth: '100%',
-                                            minHeight: '100%',
-                                            width: 'auto',
-                                            height: 'auto',
-                                            position: 'absolute',
-                                            left: '50%',
-                                            top: '50%',
-                                            transform: 'translate(-50%, -50%)',
-                                        }}
-                                        src="/imgs/illustrations/mentor.svg"
-                                    />
-                                </Box>
-                                <Text as="body" sx={{ textAlign: 'center' }}>
-                                    title
-                                </Text>
-                                <Text sx={{ textAlign: 'center' }}>{name}</Text>
-                                <Text as="body" sx={{ textAlign: 'center' }}>
-                                    {location}
-                                </Text>
-                            </Box>
-                        </Box>
-
-                        <SocialMediaBlock media={socialMedia} />
-                    </Card>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            p: 0,
-                            m: 4,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                p: 4,
-                            }}
-                        >
-                            <Text as="h3">Seeking</Text>
-                            {lookingFor &&
-                                lookingFor.map(lookingForItem => (
-                                    <Text
-                                        key={lookingForItem}
-                                        sx={{
-                                            mr: 1,
-                                            p: 2,
-                                            borderRadius: '2px',
-                                            display: 'inline',
-                                            bg: '#124780',
-                                            color: 'white',
-                                            fontSize: '10px',
-                                        }}
-                                    >
-                                        {lookingForItem}
-                                    </Text>
-                                ))}
-                        </Box>
-                    </Card>
-                </Box>
-                <Box width={[1, 1, 2 / 3]}>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            p: 0,
-                            m: 4,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                borderBottom: '1px solid',
-                                p: 4,
-                                pb: 3,
-                            }}
-                        >
-                            <Text
-                                sx={{
-                                    color: '#124780',
-                                }}
-                            >
-                                About
-                            </Text>
-                        </Box>
-                        <Box
-                            sx={{
-                                p: 4,
-                            }}
-                        >
-                            <Text>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim ...
-                            </Text>
-                            <Box
-                                sx={{
-                                    py: 2,
-                                }}
-                            >
-                                <Text as="body">Skills</Text>
-                                {skills &&
-                                    skills.map(skill => (
-                                        <Text
-                                            key={skill}
-                                            sx={{
-                                                mr: 1,
-                                                p: 2,
-                                                borderRadius: '2px',
-                                                display: 'inline',
-                                                bg: '#124780',
-                                                color: 'white',
-                                                fontSize: '10px',
-                                            }}
-                                        >
-                                            {skill}
-                                        </Text>
-                                    ))}
-                            </Box>
-                            <Box
-                                sx={{
-                                    py: 2,
-                                }}
-                            >
-                                <Text as="body">Sector</Text>
-                                {lookingFor &&
-                                    lookingFor.map(lookingForItem => (
-                                        <Text
-                                            key={lookingForItem}
-                                            sx={{
-                                                mr: 1,
-                                                p: 2,
-                                                borderRadius: '2px',
-                                                display: 'inline',
-                                                bg: '#124780',
-                                                color: 'white',
-                                                fontSize: '10px',
-                                            }}
-                                        >
-                                            {lookingForItem}
-                                        </Text>
-                                    ))}
-                            </Box>
-                            <Box
-                                sx={{
-                                    py: 2,
-                                }}
-                            >
-                                <Text as="h3">Education</Text>
-                                <Text as="body">{education}</Text>
-                            </Box>
-                            <Box
-                                sx={{
-                                    py: 2,
-                                }}
-                            >
-                                <Text as="body">Interests</Text>
-                                {interests &&
-                                    interests.map(interest => (
-                                        <Text
-                                            key={interest}
-                                            sx={{
-                                                mr: 1,
-                                                p: 2,
-                                                borderRadius: '2px',
-                                                display: 'inline',
-                                                bg: '#124780',
-                                                color: 'white',
-                                                fontSize: '10px',
-                                            }}
-                                        >
-                                            {interest}
-                                        </Text>
-                                    ))}
-                            </Box>
-                        </Box>
-                    </Card>
-                </Box>
-                <ProjectsBlock projects={ownedProjects} />
-            </Box>
-*/}
+        <Layout title="Explore | Ownemployed">
+            <Grid columns={[1, 2]}>
+                <ProjectDetails project={project} />
+            </Grid>
+            <Grid columns={[1, null, 2]}>
+                <ProjectSummary project={project} />
+                <ProjectMembers project={project} />
+            </Grid>
         </Layout>
     )
 }
 
 export default ProjectProfile
 
-function TagsBlock({ tags }) {
-    return (
-        <Box>
-            <Text as="body">Sector</Text>
-            {tags &&
-                tags.map((tag: Tag, index) => (
-                    <Text
-                        key={index}
-                        sx={{
-                            mr: 1,
-                            p: 2,
-                            borderRadius: '2px',
-                            display: 'inline',
-                            bg: '#124780',
-                            color: 'white',
-                            fontSize: '10px',
-                        }}
-                    >
-                        {tag.title}
-                    </Text>
-                ))}
-        </Box>
-    )
-}
+function ProjectDetails({ project }: { project: Project }) {
+    const { name, description, tags = [{ title: 'test tag' }] } = project
 
-function ProjectsBlock({ projects }) {
+    const sectors = tags.map((p, index) => <Tag key={index}>{p.title}</Tag>)
+
     return (
-        <Card
-            sx={{
-                borderRadius: 2,
-                p: 0,
-                m: 4,
-            }}
+        <Box
+            mt={4}
+            w={['100%', null, '100%']}
+            bg="white"
+            shadow="small"
+            borderWidth="1px"
+            borderRadius={3}
         >
-            <Box
-                sx={{
-                    borderBottom: '1px solid',
-                    p: 4,
-                    pb: 3,
-                }}
-            >
-                <Text
-                    sx={{
-                        color: '#124780',
-                    }}
-                >
-                    Projects
-                </Text>
+            <Box p={3} borderBottom="1px">
+                <Heading fontSize="h3">Project Name</Heading>
             </Box>
-            <Box
-                sx={{
-                    p: 4,
-                }}
-            >
-                <Flex flexWrap="wrap">
-                    {projects &&
-                        projects.map((project, index) => (
-                            <Box
-                                key={index}
-                                width={[1 / 2]}
-                                sx={{
-                                    my: 2,
-                                    p: 3,
-                                }}
-                            >
-                                <ProjectCard project={project} />
-                            </Box>
-                        ))}
+            <Box p={3}>
+                <Text>description</Text>
+                <Grid>lorem ipsum</Grid>
+            </Box>
+            <Box px={3} py={2}>
+                {sectors}
+            </Box>
+            <Box px={3} py={2}>
+                <Flex alignItems="center">
+                    <Box as={FaMapMarkerAlt} size="22px" color="green.400" />
+                    <Text>City, Country - Remote</Text>
                 </Flex>
             </Box>
-        </Card>
+        </Box>
     )
 }
 
-function SocialMediaBlock({ media }) {
+function ProjectSummary({ project }: { project: Project }) {
     return (
-        <Box sx={{ p: 4 }}>
-            {media.map((media, index) => {
-                const { title, url } = media
-                return (
-                    <Box sx={{ py: 2 }} key={index}>
-                        <Text as="h3">{title}</Text>
-                        <Text as="body">{url}</Text>
-                    </Box>
-                )
-            })}
+        <Box
+            mt={4}
+            w={['100%', '50%', '100%']}
+            bg="white"
+            shadow="small"
+            borderWidth="1px"
+        >
+            <Box p={3} borderBottom="1px">
+                <Heading fontSize="h3">About the project</Heading>
+            </Box>
+            <Box p={3}>
+                <Heading fontSize="h5">Project Status</Heading>
+                <Text>description</Text>
+            </Box>
+            <Box p={3}>
+                <Heading fontSize="h5">About the project</Heading>
+                <Text>description</Text>
+            </Box>
+
+            <Box p={3}>
+                <Heading fontSize="h5">Skills Required</Heading>
+                <Text>description</Text>
+            </Box>
         </Box>
     )
-
-    /*
-        <Box sx={{ p: 4 }}>
-            <Box sx={{ py: 2 }}>
-                <Text as="h3">Website</Text>
-                <Text as="body">{'website'}</Text>
-            </Box>
-            <Box sx={{ py: 2 }}>
-                <Text as="h3">LinkedIn</Text>
-                <Text as="body">{'linkedIn'}</Text>
-            </Box>
-            <Box sx={{ py: 2 }}>
-                <Text as="h3">Facebook</Text>
-                <Text as="body">{facebookUrl}</Text>
-            </Box>
-            <Box sx={{ py: 2 }}>
-                <Text as="h3">Instagram</Text>
-                <Text as="body">{instagramUrl}</Text>
-            </Box>
-            <Box sx={{ py: 2 }}>
-                <Text as="h3">Email</Text>
-                <Text as="body">{email}</Text>
-            </Box>
-            <Box sx={{ py: 4, textAlign: 'center' }}>
-                <Button sx={{ width: '60%' }}>Connect</Button>
-            </Box>
-        </Box>
-        */
 }
 
-
-
-/**
- *
-    const {
-        id,
-        name,
-        creationDate,
-        ownerID,
-        status,
-        contributors,
-        tagline,
-        description,
-        keyActivities,
-        channels,
-    } = project
-
+function ProjectMembers({ project }: { project: Project }) {
     return (
-        <>
-            <Box display={['block', 'block', 'flex']}>
-                <Box width={[1, 1, 2 / 3]}>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            m: 2,
-                            p: 0,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                p: 4,
-                            }}
-                        >
-                            <Text as="h2">{name}</Text>
-                            <Text>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim ...
-                            </Text>
-                            <Box
-                                sx={{
-                                    pb: 2,
-                                }}
-                            >
-                                {keyActivities &&
-                                    keyActivities.map(keyActivity => (
-                                        <Text
-                                            sx={{
-                                                mr: 1,
-                                                p: 2,
-                                                borderRadius: '2px',
-                                                display: 'inline',
-                                                bg: '#124780',
-                                                color: 'white',
-                                                fontSize: '10px',
-                                            }}
-                                        >
-                                            {keyActivity}
-                                        </Text>
-                                    ))}
-                            </Box>
-                        </Box>
-                    </Card>
-                </Box>
-                <Box width={[1, 1, 1 / 3]}>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            m: 2,
-                            p: 0,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                borderBottom: '1px solid',
-                                p: 2,
-                            }}
-                        >
-                            <Text
-                                sx={{
-                                    color: '#124780',
-                                }}
-                            >
-                                Something
-                            </Text>
-                        </Box>
-                    </Card>
-                </Box>
+        <Box
+            mt={4}
+            w={['100%', '70%']}
+            bg="white"
+            shadow="small"
+            borderWidth="1px"
+            borderRadius={3}
+        >
+            <Box p={3} borderBottom="1px">
+                <Heading fontSize="h3">Team members</Heading>
             </Box>
-            <Box display={['block', 'block', 'flex']}>
-                <Box width={[1, 1, 2 / 3]}>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            m: 2,
-                            p: 0,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                borderBottom: '1px solid',
-                                p: 4,
-                                pb: 3,
-                            }}
-                        >
-                            <Text
-                                sx={{
-                                    color: '#124780',
-                                }}
-                            >
-                                About the project
-                            </Text>
-                        </Box>
-                        <Box
-                            sx={{
-                                p: 4,
-                            }}
-                        >
-                            <Box
-                                sx={{
-                                    my: 2,
-                                }}
-                            >
-                                <Text as="h3">Description</Text>
-                                <Text>{description}</Text>
-                            </Box>
-                            <Box
-                                sx={{
-                                    my: 4,
-                                }}
-                            >
-                                <Text as="h3">Project status</Text>
-                                <Text>{status}</Text>
-                            </Box>
-                            <Box
-                                sx={{
-                                    my: 4,
-                                }}
-                            >
-                                <Text as="h3">Useful Links</Text>
-                                <Text>{'Need data from Daniel'}</Text>
-                            </Box>
-                            <Box
-                                sx={{
-                                    my: 4,
-                                }}
-                            >
-                                <Text as="h3">Skills needed</Text>
-                                <Text>{'Need data from Daniel'}</Text>
-                            </Box>
-                        </Box>
-                    </Card>
-                </Box>
-                <Box width={[1, 1, 1 / 3]}>
-                    <Card
-                        sx={{
-                            borderRadius: 2,
-                            m: 2,
-                            p: 0,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                borderBottom: '1px solid',
-                                p: 4,
-                                pb: 3,
-                            }}
-                        >
-                            <Text
-                                sx={{
-                                    color: '#124780',
-                                }}
-                            >
-                                Team Members
-                            </Text>
-                        </Box>
-                        <Box
-                            sx={{
-                                p: 4,
-                            }}
-                        >
-                            <Flex flexWrap="wrap">
-                                {[1, 2, 3, 4].map(() => (
-                                    <Box width={[1 / 2]} sx={{ my: 2 }}>
-                                        <Image src="/imgs/illustrations/mentor.svg" />
-                                        <Text
-                                            as="body"
-                                            sx={{ textAlign: 'center' }}
-                                        >
-                                            title
-                                        </Text>
-                                        <Text sx={{ textAlign: 'center' }}>
-                                            First name Last name
-                                        </Text>
-                                        <Flex
-                                            sx={{
-                                                justifyContent: 'space-around',
-                                            }}
-                                        >
-                                            <Box>
-                                                <Image
-                                                    width="30px"
-                                                    src="/imgs/social-media/linkedin.svg"
-                                                />
-                                            </Box>
-                                            <Box>
-                                                <Image
-                                                    width="30px"
-                                                    src="/imgs/social-media/facebook.svg"
-                                                />
-                                            </Box>
-                                        </Flex>
-                                    </Box>
-                                ))}
-                            </Flex>
-                        </Box>
-                    </Card>
-                </Box>
+            <Box p={3}>
+                <Text>description</Text>
+                <Grid>lorem ipsum</Grid>
             </Box>
-        </>
+        </Box>
     )
-
-
-*/
+}

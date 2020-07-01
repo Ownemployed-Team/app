@@ -1,31 +1,37 @@
-import { ComponentClass, FunctionComponent } from 'react'
+import { ComponentClass, FunctionComponent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Flex, Box, Card } from 'rebass'
 import Text from 'components/common/Text'
 import Layout from 'components/layout/Layout'
 import { useQuery } from '@apollo/react-hooks'
-import { Member, Project } from 'generated/graphql'
-import { withAuth, withLoginRequired } from 'use-auth0-hooks'
-import { useUserContext } from 'context/UserContext'
 import GET_PROJECTS from 'graphql/get-projects'
 import ProjectsList from 'components/projects/ProjectsList'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
 
-export const MyProjects = ({ auth }) => {
-    const { user }: { user: Member } = useUserContext()
-    const { id } = user
+import { Project } from 'generated/graphql'
+import { Skeleton } from '@chakra-ui/core'
 
-    const result = useQuery(GET_PROJECTS, { variables: { owner: id }})
+export const MyProjects = () => {
+    const userId = window.localStorage.getItem('user_id')
+    const result = useQuery(GET_PROJECTS, { variables: { owner: userId } })
 
     const { loading, data, called } = result
 
-    const projects: any[] = data?.getProjects ?? []
+     const projects: Project[] = data?.getProjects ?? []
 
-    if (loading && called) {
-        return <Layout>Loading...</Layout>
-    }
+     if (loading && called) {
+         return <Layout>
+             <Flex>
+                <Skeleton></Skeleton>
+                <Skeleton></Skeleton>
+                <Skeleton></Skeleton>
+                <Skeleton></Skeleton>
+             </Flex>
+             </Layout>
+     }
 
     // TODO: filter this backend side
-    const filtered = projects.filter(p => p.owner.id === id)
+    const filtered = projects.filter(p => p.owner.id === userId)
 
     return (
         <Layout title="Ownemployed | My Projects">
@@ -34,19 +40,13 @@ export const MyProjects = ({ auth }) => {
                     <Text as="h2">My Projects</Text>
                 </Box>
                 <Box mt={4}>
-                    <ProjectsList projects={filtered}/>
+                    <ProjectsList projects={filtered} />
                 </Box>
             </Flex>
         </Layout>
     )
 }
 
-const withAuthHOC = withAuth((MyProjects as unknown) as ComponentClass<
-    any,
-    any
->)
-
-export default withLoginRequired((withAuthHOC as unknown) as ComponentClass<
-    any,
-    any
->)
+export default withAuthenticationRequired(
+    (MyProjects as unknown) as ComponentClass<any, any>
+)

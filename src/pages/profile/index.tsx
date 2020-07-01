@@ -1,5 +1,9 @@
 import { useEffect, useState, memo, ComponentClass, ReactNode } from 'react'
-import { useAuth, withAuth, withLoginRequired } from 'use-auth0-hooks'
+import {
+    withAuth0,
+    useAuth0,
+    withAuthenticationRequired,
+} from '@auth0/auth0-react'
 import Link from 'next/link'
 import { Flex, Box } from 'rebass'
 import Layout from 'components/layout/Layout'
@@ -12,10 +16,7 @@ import Text from 'components/common/Text'
 import { NewMemberInput } from 'generated/graphql'
 import { ExecutionResult, StoreReader } from 'apollo-boost'
 import ADD_MEMBER from 'graphql/add-member'
-import { useUserContext } from 'context/UserContext'
-import { storeUser } from 'lib/user/storage'
-
-async function getUserFromAuth0() {}
+import { useAccessToken } from 'hooks/useAccessToken'
 
 //async function registerMember(data: NewMemberInput): ExecutionResult {
 //    try {
@@ -37,47 +38,31 @@ async function getUserFromAuth0() {}
 //    }
 //}
 
-function useGetMemberFromAPI(email: string): Member | null {
+const Profile = () => {
+    const {
+        user,
+        getAccessTokenSilently,
+        getAccessTokenWithPopup,
+    } = useAuth0()
+
     const result = useQuery(GET_ME, {
         variables: {
-            email: email,
+            email: user.email,
         },
     })
+
     const { loading, called, data = {} } = result
+
     const member = data.me
 
-    if (!loading && called) {
-        return member
+    if (loading) {
+        <Layout>
+            Loading
+        </Layout>
     }
-}
 
-const Profile = ({ auth }) => {
-    const { user, setUser } = useUserContext()
-
-    const { accessToken } = useAuth({
-        scope: 'read:self',
-        audience: process.env.API_AUDIENCE,
-    })
-
-    if (!user) {
-        const { user: authUser } = auth
-        const { email } = authUser
-        const { loading, called, data } = useQuery(GET_ME, {
-            variables: {
-                email: email,
-            },
-        })
-
-        if (loading && called) {
-            return (
-                <Layout>
-                    <Text> Loading </Text>
-                </Layout>
-            )
-        }
-
-        setUser(data.me)
-        storeUser(data.me)
+    if (member) {
+        window.localStorage.setItem('user_id', member.id)
     }
 
     return (
@@ -94,40 +79,12 @@ const Profile = ({ auth }) => {
                     </Link>
                 </Box>
             </Flex>
-            <Text as="h1">{user.name}</Text>
-            <Text as="h4">{user.email}</Text>
+            <Text as="h1">{user?.name}</Text>
+            <Text as="h4">{user?.email}</Text>
         </Layout>
     )
 }
 
-const withAuthHOC = withAuth((Profile as unknown) as ComponentClass<any, any>)
-
-export default withLoginRequired((withAuthHOC as unknown) as ComponentClass<
-    any,
-    any
->)
-
-//    const [registerMember, registerResult] = useMutation(ADD_MEMBER)
-//
-//    console.log(apiMember)
-//
-//    //console.log('register result', registerResult)
-//
-//    useEffect(() => {
-//        if (!apiMember) {
-//            const newMemberData: NewMemberInput = {
-//                lastName: user.family_name,
-//                firstName: user.given_name,
-//                email: user.email,
-//                tags: [],
-//            }
-//
-//            registerMember({ variables: { data: { ...newMemberData } } })
-//                .then(res => {
-//                    console.log(res)
-//                })
-//                .catch(err => {
-//                    console.error(err)
-//                })
-//        }
-//    }, [])
+export default withAuthenticationRequired(
+    (Profile as unknown) as ComponentClass<any, any>
+)

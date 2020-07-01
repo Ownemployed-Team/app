@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import Layout from 'components/layout/Layout'
 import Text from 'components/common/Text'
 import { useLazyQuery } from '@apollo/react-hooks'
 import GET_PROJECTS from 'graphql/get-projects'
+
+import { Box, Stack, SimpleGrid } from '@chakra-ui/core'
+import ProjectsList from 'components/projects/ProjectsList'
+import Hero from 'components/projects/Hero'
 
 const Projects = () => {
     const [pageIndex, setPageIndex] = useState(1)
@@ -39,18 +42,14 @@ const Projects = () => {
 
     return (
         <Layout title="Ownemployed | Explore">
-            <Text as="h1">Projects</Text>
-            <ul>
-                {projects.map(project => {
-                    return (
-                        <li>
-                            <Link href={`/projects/${project.id}`}>
-                                <a>{project.name}</a>
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
+            <SimpleGrid>
+                <Box mt={4} borderWidth="1px">
+                    <Hero />
+                </Box>
+                <Box mt={4}>
+                    <ProjectsList projects={projects} />
+                </Box>
+            </SimpleGrid>
         </Layout>
     )
 }

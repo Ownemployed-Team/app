@@ -1,24 +1,20 @@
 import { ComponentClass } from 'react'
 import Link from 'next/link'
 import { Flex, Box, Image } from 'rebass'
-import { withRouter } from 'next/router'
-
 import Text from 'components/common/Text'
 import Button from 'components/common/Button'
 import Layout from 'components/layout/Layout'
+import Loading from 'components/layout/Loading'
 import ADD_PROJECT from 'graphql/add-project'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import { NewProjectInput, Member } from 'generated/graphql'
-import GET_ME from 'graphql/get-me'
-import { withAuth, withLoginRequired } from 'use-auth0-hooks'
-import { useUserContext } from 'context/UserContext'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 let count = 0
 
-export const CreateProject = ({ auth }) => {
-    const { user }: { user: Member } = useUserContext()
+export const CreateProject = () => {
 
-    const { id } = user
+    const id = window.localStorage.getItem('user_id')
 
     const [addProject, result] = useMutation(
         ADD_PROJECT
@@ -29,15 +25,13 @@ export const CreateProject = ({ auth }) => {
     const project = data?.addProject
 
     if (loading && called) {
-        return <Layout>Loading...</Layout>
+        return <Loading />
     }
 
     const input: NewProjectInput = {
         name: `Test Project from website ${count}`,
         ownerId: id,
     }
-
-    console.log(input, data)
 
     return (
         <Layout title="Ownemployed | Create Project">
@@ -71,12 +65,6 @@ export const CreateProject = ({ auth }) => {
     )
 }
 
-const withAuthHOC = withAuth((CreateProject as unknown) as ComponentClass<
-    any,
-    any
->)
-
-export default withLoginRequired((withAuthHOC as unknown) as ComponentClass<
-    any,
-    any
->)
+export default withAuthenticationRequired(
+    (CreateProject as unknown) as ComponentClass<any, any>
+)

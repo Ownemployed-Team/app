@@ -8,9 +8,6 @@ export const GET_MEMBERS = gql`
             id
             firstName
             lastName
-            email
-            createdAt
-            education
             bio
             location
             remote
@@ -18,10 +15,6 @@ export const GET_MEMBERS = gql`
                 id
                 title
                 category
-            }
-            socialMedia {
-                name
-                url
             }
             avatar
         }

@@ -78,53 +78,16 @@ const Members = () => {
         return <Layout>Loading</Layout>
     }
 
-    const { getMembers: members } = data
+    const { getMembers: members = [] } = data
 
     return (
         <Layout title="Ownemployed | About">
             <Hero />
-            <Box>
-                <MemberFilter
-                    onSubmitSearch={(values, actions) => {
-                        setTimeout(() => {
-                            //TODO : call backend to find project with query function getProjects
-                            const { search } = values
 
-                            setSearchWord(search)
-
-                            alert(JSON.stringify(values, null, 2))
-
-                            actions.setSubmitting(false)
-                        }, 1000)
-                    }}
-                />
-                <Box
-                    sx={{
-                        mx: 'auto',
-                        px: 2,
-                        py: 2,
-                    }}
-                >
-                    <ItemsCount items={users} size={10} />
-                </Box>
-            </Box>
-            <Box display={['block', 'none', 'none']}>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={handleScrollEnd}
-                    hasMore={true}
-                    loader={
-                        <div className="loader" key={0}>
-                            Loading ...
-                        </div>
-                    }
-                >
-                    <MembersList members={users} />
-                </InfiniteScroll>
-            </Box>
             <Box display={['none', 'block', 'block']}>
+                <Pagination items={members} handler={handlePageClick} />
                 <MembersList members={users} />
-                <Pagination items={users} handler={handlePageClick} />
+                <Pagination items={members} handler={handlePageClick} />
             </Box>
         </Layout>
     )
@@ -132,4 +95,32 @@ const Members = () => {
 
 export default Members
 
-//export async function getStaticProps() {}
+function MemberFilters() {
+    return (
+        <Box>
+            <MemberFilter
+                onSubmitSearch={(values, actions) => {
+                    setTimeout(() => {
+                        //TODO : call backend to find project with query function getProjects
+                        const { search } = values
+
+                        //setSearchWord(search)
+
+                        alert(JSON.stringify(values, null, 2))
+
+                        actions.setSubmitting(false)
+                    }, 1000)
+                }}
+            />
+            <Box
+                sx={{
+                    mx: 'auto',
+                    px: 2,
+                    py: 2,
+                }}
+            >
+                <ItemsCount items={members} size={10} />
+            </Box>
+        </Box>
+    )
+}

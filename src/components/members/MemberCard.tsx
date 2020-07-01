@@ -2,8 +2,10 @@ import React from 'react'
 import Card from 'components/common/Card'
 import Link from 'next/link'
 import Text from 'components/common/Text'
-import { Box, Image } from 'rebass'
+//import { Box, Image } from 'rebass'
+import { Box, Image, Badge } from '@chakra-ui/core'
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import { Member } from 'generated/graphql'
 
 export type User = {
     avatar: string
@@ -32,9 +34,19 @@ function truncateValues(summary, location) {
 }
 
 const MemberCard = ({
-    user: { avatar, summary, id, headline, firstName, lastName, location },
+    user: {
+        avatar,
+        bio,
+        id,
+        headline,
+        firstName,
+        lastName,
+        location,
+        name,
+        email,
+    },
 }: {
-    user: User
+    user: Member
 }) => {
     //TODO: Change the user type to fit the db
     let avatarUrl = avatar
@@ -44,14 +56,55 @@ const MemberCard = ({
     const {
         summary: truncatedSummary,
         location: truncatedLocation,
-    } = truncateValues(summary, location)
+    } = truncateValues(bio, location)
 
-    // const avatar2 =
-    //     'https://res.cloudinary.com/ownemployed/image/upload/v1590873376/user_uploads/3D-visning_cygugz.jpg'
-    // const transformedAvatar = avatar2.replace(
-    //     '/upload',
-    //     `/upload/w_auto:100:400`
-    // )
+    return (
+        <Box maxW="sm" borderWidth="1px" rounded="lg" overflow="hidden">
+            <Image src={avatarUrl} />
+
+            <Box p="6">
+                <Box d="flex" alignItems="baseline">
+                    <Badge rounded="full" px="2" variantColor="teal">
+                        New
+                    </Badge>
+                    <Box
+                        color="gray.500"
+                        fontWeight="semibold"
+                        letterSpacing="wide"
+                        fontSize="xs"
+                        textTransform="uppercase"
+                        ml="2"
+                    >
+                        lorem ipsum
+                    </Box>
+                </Box>
+
+                <Box
+                    mt="1"
+                    fontWeight="semibold"
+                    as="h4"
+                    lineHeight="tight"
+                    isTruncated
+                >
+                    {name}
+                </Box>
+
+                <Box>
+                    <Box as="span" color="gray.600" fontSize="sm">
+                        {email}
+                    </Box>
+                </Box>
+
+                <Box d="flex" mt="2" alignItems="center">
+                    {truncatedSummary}
+                </Box>
+
+                <Box d="flex" mt="2" alignItems="center">
+                    {truncatedLocation}
+                </Box>
+            </Box>
+        </Box>
+    )
 
     return (
         <Link href={`/members/${id}`}>

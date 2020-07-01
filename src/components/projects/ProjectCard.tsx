@@ -1,10 +1,9 @@
 import Card from 'components/common/Card'
 import Text from 'components/common/Text'
-import { Box, Flex, Image } from 'rebass'
-import { Label } from '@rebass/forms'
-import Link from 'next/link'
-import { UniqueInputFieldNamesRule } from 'graphql'
+import { Flex, Image } from 'rebass'
+import Link from 'components/common/Link'
 import { Project } from 'generated/graphql'
+import { Box } from '@chakra-ui/core'
 
 const ProjectCard = ({ project }: { project: Project }) => {
     const { id, name, description, picture, summary } = project
@@ -18,41 +17,35 @@ const ProjectCard = ({ project }: { project: Project }) => {
     )
 
     return (
-        <Box px={0} py={0} width={[1, 1 / 3, 1 / 4]} mx={2} my={2}>
+        <Box height="300px">
             <Link href={`/projects/${id}`}>
-                <a>
-                    <Card variant="secondary">
-                        <Image
-                            src={transformedAvatar}
-                            width={'100%'}
-                            m={'auto'}
-                        />
-                        <Box
-                            bg={'white'}
+                <Card variant="secondary">
+                    <Image src={transformedAvatar} width={'100%'} m={'auto'} />
+                    <Box
+                        bg={'white'}
+                        sx={{
+                            minHeight: 280,
+                            mx: 'auto',
+                            p: 4,
+                        }}
+                    >
+                        <Text as="h1" sx={{ fontSize: [16, 20, 20] }}>
+                            {name}
+                        </Text>
+                        <Text
+                            as="body"
                             sx={{
-                                minHeight: 280,
-                                mx: 'auto',
-                                p: 4,
+                                mb: 2,
+                                overflow: 'auto',
+                                textOverflow: 'ellipsis',
+                                maxHeight: 70,
                             }}
                         >
-                            <Text as="h1" sx={{ fontSize: [16, 20, 20] }}>
-                                {name}
-                            </Text>
-                            <Text
-                                as="body"
-                                sx={{
-                                    mb: 2,
-                                    overflow: 'auto',
-                                    textOverflow: 'ellipsis',
-                                    maxHeight: 70,
-                                }}
-                            >
-                                {summary}
-                            </Text>
-                            <Flex flexWrap="wrap">Lorem ipsum</Flex>
-                        </Box>
-                    </Card>
-                </a>
+                            {summary}
+                        </Text>
+                        <Flex flexWrap="wrap">Lorem ipsum</Flex>
+                    </Box>
+                </Card>
             </Link>
         </Box>
     )

@@ -1,4 +1,49 @@
+import { theme as chakraTheme } from '@chakra-ui/core'
+
+//export default chakraTheme
+
 export default {
+    ...chakraTheme,
+
+    breakpoints: ['40em', '55em', '64em'],
+    //breakpoints: ['720px', '920px', '1440px'],
+    fontSizes: {
+        body: '14px',
+        h1: '34px',
+        h2: '28px',
+        h3: '22px',
+        h4: '18px',
+        small: '12px',
+    },
+    space: [0, 4, 8, 16, 32, 64, 128, 256],
+    fonts: {
+        monospace: 'Menlo, monospace',
+        body: 'Rubik, sans-serif',
+        heading: 'Poppins, sans-serif',
+    },
+    fontWeights: {
+        semibold: 600,
+        regular: 400,
+        medium: 500,
+    },
+    lineHeights: {
+        body: '26px',
+        heading: '52px',
+    },
+    shadows: {
+        small: '0px 0px 8px rgba(0,0,0,0.15);',
+        large: '0 0 24px rgba(0, 0, 0, .125)',
+    },
+    radii: {
+        button: 4,
+        default: 12,
+        small: 3,
+        large: 39,
+        round: '100%',
+    },
+}
+
+export const theme = {
     breakpoints: ['40em', '55em', '64em'],
     //breakpoints: ['720px', '920px', '1440px'],
     fontSizes: {
