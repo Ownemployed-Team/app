@@ -9,7 +9,7 @@ import ProjectsList from 'components/projects/ProjectsList'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 import { Project } from 'generated/graphql'
-import { Skeleton } from '@chakra-ui/core'
+import Loading from 'components/layout/Loading'
 
 export const MyProjects = () => {
     const userId = window.localStorage.getItem('user_id')
@@ -20,14 +20,7 @@ export const MyProjects = () => {
      const projects: Project[] = data?.getProjects ?? []
 
      if (loading && called) {
-         return <Layout>
-             <Flex>
-                <Skeleton></Skeleton>
-                <Skeleton></Skeleton>
-                <Skeleton></Skeleton>
-                <Skeleton></Skeleton>
-             </Flex>
-             </Layout>
+         return <Loading></Loading>
      }
 
     // TODO: filter this backend side

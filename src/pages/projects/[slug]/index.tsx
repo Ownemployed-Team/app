@@ -43,10 +43,12 @@ function ProjectProfile() {
     const project: Project = data?.getProject ?? {}
     const { name } = project
 
-    const canEdit = project.owner.id === userId
+    //const canEdit = project.owner.id === userId
+    const canEdit = true
 
     return (
         <Layout title="Explore | Ownemployed">
+            {JSON.stringify(data)}
             <Grid columns={[1, 2]}>
                 <ProjectDetails project={project} />
             </Grid>

@@ -1,23 +1,14 @@
 import { FunctionComponent, ReactNode } from 'react'
 import NextLink from 'next/link'
-import { Link as ChakraLink } from '@chakra-ui/core'
 
 type LinkProps = {
     children: ReactNode
     className?: string
     props?: any
     style?: object
-    sx?: SxStyleProp
+    sx?: any
     href: string
     variant?: string
-}
-
-const NextLinkWrapper = ({ href, children }) => {
-    return (
-        <NextLink href={href}>
-            <a>{children}</a>
-        </NextLink>
-    )
 }
 
 export const Link: FunctionComponent<LinkProps> = ({
@@ -28,16 +19,12 @@ export const Link: FunctionComponent<LinkProps> = ({
     ...props
 }) => {
     if (href.startsWith('http') || href.startsWith('mailto')) {
-        return (
-            <ChakraLink isExternal target="_blank" href={href} {...props}>
-                {children}
-            </ChakraLink>
-        )
+        return <a>{children}</a>
     } else {
         return (
-            <ChakraLink as={NextLinkWrapper} href={href}>
-                {children}
-            </ChakraLink>
+            <NextLink href={href}>
+                <a>{children}</a>
+            </NextLink>
         )
     }
 }

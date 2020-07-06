@@ -1,10 +1,4 @@
-import { theme as chakraTheme } from '@chakra-ui/core'
-
-//export default chakraTheme
-
 export default {
-    ...chakraTheme,
-
     breakpoints: ['40em', '55em', '64em'],
     //breakpoints: ['720px', '920px', '1440px'],
     fontSizes: {
