@@ -1,12 +1,11 @@
 import Card from 'components/common/Card'
 import Text from 'components/common/Text'
-import { Flex, Image } from 'rebass'
+import { Box, Flex, Image } from 'rebass'
 import Link from 'components/common/Link'
 import { Project } from 'generated/graphql'
-import { Box } from '@chakra-ui/core'
 
 const ProjectCard = ({ project }: { project: Project }) => {
-    const { id, name, description, picture, summary } = project
+    const { description, id, name, picture, summary } = project
 
     // TODO : wait till cloudinary images is in database and use picture instead of hardcoded image.
     const avatar =
@@ -17,7 +16,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     )
 
     return (
-        <Box height="300px">
+        <Box>
             <Link href={`/projects/${id}`}>
                 <Card variant="secondary">
                     <Image src={transformedAvatar} width={'100%'} m={'auto'} />
