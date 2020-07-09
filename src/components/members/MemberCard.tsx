@@ -3,9 +3,8 @@ import Card from 'components/common/Card'
 import Link from 'next/link'
 import Text from 'components/common/Text'
 //import { Box, Image } from 'rebass'
-import { Box, Image, Badge } from '@chakra-ui/core'
 import { FaMapMarkerAlt } from 'react-icons/fa'
-import { Member } from 'generated/graphql'
+import { Member } from 'lib/generated/graphql'
 
 export type User = {
     avatar: string

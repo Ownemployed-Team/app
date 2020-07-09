@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Member } from 'generated/graphql'
+import { Member } from 'lib/generated/graphql'
 
 import Layout from 'components/layout/Layout'
 import { Flex, Box, Stack, Heading, Tag, Avatar } from '@chakra-ui/core'
@@ -8,7 +8,7 @@ import Grid from 'components/common/Grid'
 import Text from 'components/common/Text'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { useRouter } from 'next/router'
-import GET_MEMBER from 'graphql/get-member'
+import GET_MEMBER from 'lib/graphql/get-member'
 import { useQuery } from '@apollo/react-hooks'
 
 function MemberProfile() {

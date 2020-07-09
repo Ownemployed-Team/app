@@ -1,77 +1,33 @@
 import React from 'react'
 import Link from 'components/common/Link'
 //import MemberCard from 'components/members/MemberCard'
-import { Box, Image, Flex } from 'rebass'
-import { Member } from 'generated/graphql'
+import { Box, Image, Card, Heading, Text } from 'rebass'
+import { Member } from 'lib/generated/graphql'
+import { Gallery } from 'components/layout/Gallery'
 
-function MemberCard({ member }: { member: Member }) {
-    const property = {
-        imageUrl: 'https://bit.ly/2Z4KKcF',
-        imageAlt: 'Rear view of modern home with pool',
-        beds: 3,
-        baths: 2,
-        title:
-            'Modern home in city center in the heart of historic Los Angeles',
-        formattedPrice: '$1,900.00',
-        reviewCount: 34,
-        rating: 4,
-    }
-
-    const { name, avatar } = member
-
-    return (
-        <Box maxW="sm" borderWidth="1px" rounded="lg" overflow="hidden">
-            <Image src={property.imageUrl} alt={property.imageAlt} />
-
-            <Box p="6">
-                <Box d="flex" alignItems="baseline">
-                    <Box
-                        color="gray.500"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        ml="2"
-                    >
-                        {property.beds} beds &bull; {property.baths} baths
-                    </Box>
-                </Box>
-
-                <Box
-                    mt="1"
-                    fontWeight="semibold"
-                    as="h4"
-                    lineHeight="tight"
-                    isTruncated
-                >
-                    {property.title}
-                </Box>
-
-                <Box>
-                    {property.formattedPrice}
-                    <Box as="span" color="gray.600" fontSize="sm">
-                        / wk
-                    </Box>
-                </Box>
-
-                <Box d="flex" mt="2" alignItems="center">
-                    <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                        {property.reviewCount} reviews
-                    </Box>
-                </Box>
-            </Box>
-        </Box>
-    )
-}
-
-const MembersList = ({ members }) => {
-    return (
-        <Flex flexWrap="wrap">
-            {members.map((member, index) => (
-                <MemberCard key={index} member={member} />
-            ))}
-        </Flex>
-    )
+const MembersList = ({ members }: { members: Member[] }) => {
+    const list = members.map((member, index) => (
+        <MemberCard member={member} key={index} />
+    ))
+    return <Gallery items={list} />
 }
 
 export default MembersList
+
+const fillIn = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad distinctio sint porro vel necessitatibus unde repellendus quos molestiae. Deserunt iusto non amet enim maxime laudantium sed iste quas possimus quaerat!'
+
+
+function MemberCard({ member }: { member: Member }) {
+    const { id, name, avatar, bio } = member
+    return (
+        <Link href={`/members/${id}`}>
+            <Card variant="card.secondary" height="100%">
+                <Image src={avatar ?? ''} variant="avatar" />
+                <Box p={3}>
+                    <Heading>{name}</Heading>
+                    <Text>{bio ?? fillIn}</Text>
+                </Box>
+            </Card>
+        </Link>
+    )
+}

@@ -1,9 +1,9 @@
-import Card from 'components/common/Card'
 import Text from 'components/common/Text'
-import { Flex, Image } from 'rebass'
+import { Flex, Image, Box, Heading, Card } from 'rebass'
 import Link from 'components/common/Link'
-import { Project } from 'generated/graphql'
-import { Box } from '@chakra-ui/core'
+import { Project } from 'lib/generated/graphql'
+
+const fillIn = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad distinctio sint porro vel necessitatibus unde repellendus quos molestiae. Deserunt iusto non amet enim maxime laudantium sed iste quas possimus quaerat!'
 
 const ProjectCard = ({ project }: { project: Project }) => {
     const { id, name, description, picture, summary } = project
@@ -13,41 +13,19 @@ const ProjectCard = ({ project }: { project: Project }) => {
         'https://res.cloudinary.com/ownemployed/image/upload/v1590873376/user_uploads/3D-visning_cygugz.jpg'
     const transformedAvatar = avatar.replace(
         '/upload',
-        `/upload/w_auto:100:400`
+        `/upload/w_auto:100:200`
     )
 
     return (
-        <Box height="300px">
-            <Link href={`/projects/${id}`}>
-                <Card variant="secondary">
-                    <Image src={transformedAvatar} width={'100%'} m={'auto'} />
-                    <Box
-                        bg={'white'}
-                        sx={{
-                            minHeight: 280,
-                            mx: 'auto',
-                            p: 4,
-                        }}
-                    >
-                        <Text as="h1" sx={{ fontSize: [16, 20, 20] }}>
-                            {name}
-                        </Text>
-                        <Text
-                            as="body"
-                            sx={{
-                                mb: 2,
-                                overflow: 'auto',
-                                textOverflow: 'ellipsis',
-                                maxHeight: 70,
-                            }}
-                        >
-                            {summary}
-                        </Text>
-                        <Flex flexWrap="wrap">Lorem ipsum</Flex>
-                    </Box>
-                </Card>
-            </Link>
-        </Box>
+        <Link href={`/projects/${id}`}>
+            <Card variant="card.secondary" height="100%">
+                <Image src={picture ?? avatar} width="100%" />
+                <Box p={3}>
+                    <Heading>{name}</Heading>
+                    <Text>{description ?? fillIn}</Text>
+                </Box>
+            </Card>
+        </Link>
     )
 }
 

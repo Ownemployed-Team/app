@@ -6,17 +6,6 @@ import { useRouter } from 'next/router'
 import { useAuth0 } from '@auth0/auth0-react'
 
 import Button from 'components/common/Button'
-import {
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuGroup,
-    MenuDivider,
-    MenuOptionGroup,
-    MenuItemOption,
-    Button as ChakraButton,
-} from '@chakra-ui/core'
 
 const links = css`
     a {
@@ -33,35 +22,34 @@ const Brand = () => {
 }
 
 const ProfileMenu = ({ username, logoutHandler }) => {
+    let clearId: () => void = () => {}
+
+    useEffect(() => {
+        clearId = () => {
+            window.localStorage.removeItem('user_id')
+        }
+    }, [])
+
     return (
-        <Menu>
-            <MenuButton as={ChakraButton} rightIcon="chevron-down">
-                {username}
-            </MenuButton>
-            <MenuList>
-                <MenuItem>
-                    <Link href="/profile">Profile</Link>
-                </MenuItem>
+        <Flex>
+            <Link href="/profile">Profile</Link>
 
-                <MenuItem>
-                    <Link href="/profile/my-projects">My Projects</Link>
-                </MenuItem>
+            <Link href="/profile/my-projects">My Projects</Link>
 
-                <MenuItem>
-                    <Link href="/profile/create-project">Start a project</Link>
-                </MenuItem>
+            <Link href="/profile/create-project">Start a project</Link>
 
-                <MenuItem
-                    onClick={() =>
-                        logoutHandler({
-                            returnTo: 'http://localhost:3000/',
-                        })
-                    }
-                >
-                    Sign Out
-                </MenuItem>
-            </MenuList>
-        </Menu>
+            <Button
+                onClick={() => {
+                    clearId()
+
+                    logoutHandler({
+                        returnTo: 'http://localhost:3000/',
+                    })
+                }}
+            >
+                Sign Out
+            </Button>
+        </Flex>
     )
 }
 

@@ -1,53 +1,17 @@
-export default {
-    breakpoints: ['40em', '55em', '64em'],
-    //breakpoints: ['720px', '920px', '1440px'],
-    fontSizes: {
-        body: '14px',
-        h1: '34px',
-        h2: '28px',
-        h3: '22px',
-        h4: '18px',
-        small: '12px',
-    },
-    space: [0, 4, 8, 16, 32, 64, 128, 256],
-    fonts: {
-        monospace: 'Menlo, monospace',
-        body: 'Rubik, sans-serif',
-        heading: 'Poppins, sans-serif',
-    },
-    fontWeights: {
-        semibold: 600,
-        regular: 400,
-        medium: 500,
-    },
-    lineHeights: {
-        body: '26px',
-        heading: '52px',
-    },
-    shadows: {
-        small: '0px 0px 8px rgba(0,0,0,0.15);',
-        large: '0 0 24px rgba(0, 0, 0, .125)',
-    },
-    radii: {
-        button: 4,
-        default: 12,
-        small: 3,
-        large: 39,
-        round: '100%',
-    },
-}
+import preset from '@rebass/preset'
 
-export const theme = {
+export default {
+    ...preset,
     breakpoints: ['40em', '55em', '64em'],
     //breakpoints: ['720px', '920px', '1440px'],
-    fontSizes: {
-        body: '14px',
-        h1: '34px',
-        h2: '28px',
-        h3: '22px',
-        h4: '18px',
-        small: '12px',
-    },
+    // fontSizes: {
+    //     body: '14px',
+    //     h1: '34px',
+    //     h2: '28px',
+    //     h3: '22px',
+    //     h4: '18px',
+    //     small: '12px',
+    // },
     colors: {
         primary: '#6F63AD',
         primaryHover: '#D0CDE1',
@@ -79,7 +43,7 @@ export const theme = {
         heading: '52px',
     },
     shadows: {
-        small: '0px 0px 8px rgba(0,0,0,0.15);',
+        small: '0px 0px 8px rgba(0,0,0,0.25);',
         large: '0 0 24px rgba(0, 0, 0, .125)',
     },
     radii: {
@@ -90,7 +54,7 @@ export const theme = {
         round: '100%',
     },
     variants: {
-        box: {},
+        //box: {},
         card: {
             primary: {
                 backgroundColor: 'white',
@@ -101,17 +65,17 @@ export const theme = {
             },
             secondary: {
                 bg: '#F3F3F3',
-                borderRadius: '0',
-                minHeight: 385,
+                borderRadius: '3px',
                 mx: '0',
                 padding: '0',
+                boxShadow: 'small',
             },
         },
         flex: {},
         image: {},
         link: {},
     },
-    text: {},
+    //text: {},
     buttons: {
         primary: {
             backgroundColor: 'primary',

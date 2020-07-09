@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Box, Button, Flex, Image } from 'rebass'
 import Text from 'components/common/Text'
-import { useConfig } from 'hooks/useConfig'
+import { useConfig } from 'lib/hooks/useConfig'
 import { uploadImage } from 'lib/media'
 
 type UploadImageProps = {

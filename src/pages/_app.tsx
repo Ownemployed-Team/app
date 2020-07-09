@@ -1,12 +1,19 @@
-// import App from 'next/app'
+import dynamic from 'next/dynamic'
 import Router from 'next/router'
 import { ApolloProvider } from '@apollo/react-hooks'
-import { useApollo } from 'hooks/useApollo'
+import { useApollo } from 'lib/hooks/useApollo'
 import { Auth0Provider } from '@auth0/auth0-react'
 import theme from 'config/theme'
-import { useState } from 'react'
-import { Member } from 'generated/graphql'
+import { useEffect } from 'react'
 import { ThemeProvider } from 'emotion-theming'
+import 'nprogress/nprogress.css'
+
+const TopProgressBar = dynamic(
+    () => {
+        return import('components/common/TopProgressBar')
+    },
+    { ssr: false }
+)
 
 const onRedirectCallback = appState => {
     if (appState && appState.returnTo) {
@@ -19,9 +26,11 @@ const onRedirectCallback = appState => {
 }
 
 function App({ Component, pageProps }) {
-    const [user, setUser] = useState<Member>()
-
     const apolloClient = useApollo(pageProps.initialApolloState)
+
+    useEffect(() => {
+        console.log('user_id on _app', window.localStorage.getItem('user_id'))
+    }, [])
 
     return (
         <ApolloProvider client={apolloClient}>
@@ -34,6 +43,7 @@ function App({ Component, pageProps }) {
                 scope="self:read"
             >
                 <ThemeProvider theme={theme}>
+                    <TopProgressBar />
                     <Component {...pageProps} />
                 </ThemeProvider>
             </Auth0Provider>

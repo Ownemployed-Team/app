@@ -6,6 +6,7 @@ import CookieConsent from 'react-cookie-consent'
 
 import Navbar from 'components/layout/Navbar'
 import Footer from 'components/layout/Footer'
+import { useEffect } from 'react'
 
 type Props = {
     children?: ReactNode
@@ -28,46 +29,48 @@ const Main = ({ children, boxed }) => {
     )
 }
 
-const Layout = ({ children, boxed = true, title = 'Ownemployed' }: Props) => (
-    <Flex
-        flexDirection="column"
-        px={0}
-        py={0}
-        sx={{
-            minHeight: '100vh',
-        }}
-    >
-        <Head>
-            <title>{title}</title>
-            <meta charSet="utf-8" />
-            <meta
-                name="viewport"
-                content="initial-scale=1.0, width=device-width"
-            />
-            <link rel="stylesheet" href="/reset.css" />
-        </Head>
-        <header>
-            <Navbar />
-        </header>
-        <Main boxed={boxed}>{children}</Main>
-        <CookieConsent
-            acceptOnScroll={true}
-            buttonStyle={{}}
-            buttonText="Agree"
-            cookieName="ownemployed-cookie-accepted"
-            enableDeclineButton
-            contentStyle={{ flex: 'none' }}
-            location="bottom"
-            style={{ justifyContent: 'center', background: '#124780' }}
+const Layout = ({ children, boxed = true, title = 'Ownemployed' }: Props) => {
+    return (
+        <Flex
+            flexDirection="column"
+            px={0}
+            py={0}
+            sx={{
+                minHeight: '100vh',
+            }}
         >
-            By continuing you agree to our terms of service. Read our Privacy
-            Policy{' '}
-            <Link href="/legal">
-                <a>here</a>
-            </Link>
-        </CookieConsent>
-        <Footer />
-    </Flex>
-)
+            <Head>
+                <title>{title}</title>
+                <meta charSet="utf-8" />
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+                <link rel="stylesheet" href="/reset.css" />
+            </Head>
+            <header>
+                <Navbar />
+            </header>
+            <Main boxed={boxed}>{children}</Main>
+            <CookieConsent
+                acceptOnScroll={true}
+                buttonStyle={{}}
+                buttonText="Agree"
+                cookieName="ownemployed-cookie-accepted"
+                enableDeclineButton
+                contentStyle={{ flex: 'none' }}
+                location="bottom"
+                style={{ justifyContent: 'center', background: '#124780' }}
+            >
+                By continuing you agree to our terms of service. Read our
+                Privacy Policy{' '}
+                <Link href="/legal">
+                    <a>here</a>
+                </Link>
+            </CookieConsent>
+            <Footer />
+        </Flex>
+    )
+}
 
 export default Layout
