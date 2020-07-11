@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Layout from 'components/layout/Layout'
-import { Flex, Box, Heading } from 'rebass'
+import Card from 'components/common/Card'
+import { Box, Flex, Image, Heading } from 'rebass'
 import { Project } from 'lib/generated/graphql'
 import Text from 'components/common/Text'
 import { useRouter } from 'next/router'
@@ -28,11 +29,9 @@ function ProjectProfile() {
         setUserId(id)
     }, [])
 
-
-
-    if (!userId) {
-        return <Loading></Loading>
-    }
+    // if (!userId) {
+    //     return <Loading></Loading>
+    // }
 
     if (loading && called) {
         return <Loading></Loading>
@@ -43,14 +42,12 @@ function ProjectProfile() {
 
     //const canEdit = project.owner.id === userId
     const canEdit = true
-    return null
 
     return (
         <Layout title="Explore | Ownemployed">
-            {JSON.stringify(data)}
-            <Flex>
+            <Box>
                 <ProjectDetails project={project} />
-            </Flex>
+            </Box>
             <Flex>
                 <ProjectSummary project={project} />
                 <ProjectMembers project={project} />
@@ -64,83 +61,218 @@ export default ProjectProfile
 function ProjectDetails({ project }: { project: Project }) {
     const { name, description, tags = [{ title: 'test tag' }] } = project
 
-    const sectors = tags.map((p, index) => <Tag key={index}>{p.title}</Tag>)
-
     return (
-        <Box
-            mt={4}
-            w={['100%', null, '100%']}
-            bg="white"
-            shadow="small"
-            borderWidth="1px"
-            borderRadius={3}
-        >
-            <Box p={3} borderBottom="1px">
-                <Heading fontSize="h3">Project Name</Heading>
+        <Box display={['block', 'block', 'flex']}>
+            <Box width={[1, 1, 2 / 3]}>
+                <Card
+                    sx={{
+                        borderRadius: 2,
+                        m: 2,
+                        p: 0,
+                    }}
+                >
+                    <Box
+                        sx={{
+                            p: 4,
+                        }}
+                    >
+                        <Text as="h2">{name}</Text>
+                        <Text>
+                            Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua. Ut
+                            enim ad minim ...
+                        </Text>
+                        <Box
+                            sx={{
+                                pb: 2,
+                            }}
+                        >
+                            {tags &&
+                                tags.map(({ title }, tagIndex) => (
+                                    <Text
+                                        key={tagIndex}
+                                        sx={{
+                                            mr: 1,
+                                            p: 2,
+                                            borderRadius: '2px',
+                                            display: 'inline',
+                                            bg: '#124780',
+                                            color: 'white',
+                                            fontSize: '10px',
+                                        }}
+                                    >
+                                        {title}
+                                    </Text>
+                                ))}
+                        </Box>
+                    </Box>
+                </Card>
             </Box>
-            <Box p={3}>
-                <Text>description</Text>
-                <Flex>lorem ipsum</Flex>
-            </Box>
-            <Box px={3} py={2}>
-                {sectors}
-            </Box>
-            <Box px={3} py={2}>
-                <Flex alignItems="center">
-                    <Box as={FaMapMarkerAlt} size="22px" color="green.400" />
-                    <Text>City, Country - Remote</Text>
-                </Flex>
+            <Box width={[1, 1, 1 / 3]}>
+                <Card
+                    sx={{
+                        borderRadius: 2,
+                        m: 2,
+                        p: 0,
+                    }}
+                >
+                    <Box
+                        sx={{
+                            borderBottom: '1px solid',
+                            p: 2,
+                        }}
+                    >
+                        <Text
+                            sx={{
+                                color: '#124780',
+                            }}
+                        >
+                            Something
+                        </Text>
+                    </Box>
+                </Card>
             </Box>
         </Box>
     )
 }
 
 function ProjectSummary({ project }: { project: Project }) {
-    return (
-        <Box
-            mt={4}
-            w={['100%', '50%', '100%']}
-            bg="white"
-            shadow="small"
-            borderWidth="1px"
-        >
-            <Box p={3} borderBottom="1px">
-                <Heading fontSize="h3">About the project</Heading>
-            </Box>
-            <Box p={3}>
-                <Heading fontSize="h5">Project Status</Heading>
-                <Text>description</Text>
-            </Box>
-            <Box p={3}>
-                <Heading fontSize="h5">About the project</Heading>
-                <Text>description</Text>
-            </Box>
+    const { name, description, tags = [{ title: 'test tag' }] } = project
 
-            <Box p={3}>
-                <Heading fontSize="h5">Skills Required</Heading>
-                <Text>description</Text>
-            </Box>
+    return (
+        <Box width={[1, 1, 2 / 3]}>
+            <Card
+                sx={{
+                    borderRadius: 2,
+                    m: 2,
+                    p: 0,
+                }}
+            >
+                <Box
+                    sx={{
+                        borderBottom: '1px solid',
+                        p: 4,
+                        pb: 3,
+                    }}
+                >
+                    <Text
+                        sx={{
+                            color: '#124780',
+                        }}
+                    >
+                        About the project
+                    </Text>
+                </Box>
+                <Box
+                    sx={{
+                        p: 4,
+                    }}
+                >
+                    <Box
+                        sx={{
+                            my: 2,
+                        }}
+                    >
+                        <Text as="h3">Description</Text>
+                        <Text>{description}</Text>
+                    </Box>
+                    <Box
+                        sx={{
+                            my: 4,
+                        }}
+                    >
+                        <Text as="h3">Project status</Text>
+                        <Text>{status}</Text>
+                    </Box>
+                    <Box
+                        sx={{
+                            my: 4,
+                        }}
+                    >
+                        <Text as="h3">Useful Links</Text>
+                        <Text>{'Need data from Daniel'}</Text>
+                    </Box>
+                    <Box
+                        sx={{
+                            my: 4,
+                        }}
+                    >
+                        <Text as="h3">Skills needed</Text>
+                        <Text>{'Need data from Daniel'}</Text>
+                    </Box>
+                </Box>
+            </Card>
         </Box>
     )
 }
 
 function ProjectMembers({ project }: { project: Project }) {
     return (
-        <Box
-            mt={4}
-            w={['100%', '70%']}
-            bg="white"
-            shadow="small"
-            borderWidth="1px"
-            borderRadius={3}
-        >
-            <Box p={3} borderBottom="1px">
-                <Heading fontSize="h3">Team members</Heading>
-            </Box>
-            <Box p={3}>
-                <Text>description</Text>
-                <Flex>lorem ipsum</Flex>
-            </Box>
+        <Box width={[1, 1, 1 / 3]}>
+            <Card
+                sx={{
+                    borderRadius: 2,
+                    m: 2,
+                    p: 0,
+                }}
+            >
+                <Box
+                    sx={{
+                        borderBottom: '1px solid',
+                        p: 4,
+                        pb: 3,
+                    }}
+                >
+                    <Text
+                        sx={{
+                            color: '#124780',
+                        }}
+                    >
+                        Team Members
+                    </Text>
+                </Box>
+                <Box
+                    sx={{
+                        p: 4,
+                    }}
+                >
+                    <Flex flexWrap="wrap">
+                        {[1, 2, 3, 4].map((item, idx) => (
+                            <Box key={idx} width={[1 / 2]} sx={{ my: 2 }}>
+                                <Image src="/imgs/illustrations/mentor.svg"></Image>
+                                <Text
+                                    as="body"
+                                    sx={{ textAlign: 'center' }}
+                                >
+                                    title
+                                </Text>
+                                <Text sx={{ textAlign: 'center' }}>
+                                    First name Last name
+                                </Text>
+                                <Flex
+                                    sx={{
+                                        justifyContent: 'space-around',
+                                    }}
+                                >
+                                    <Box>
+                                        <Image
+                                            width="30px"
+                                            src="/imgs/social-media/linkedin.svg"
+                                        ></Image>
+                                    </Box>
+                                    <Box>
+                                        <Image
+                                            width="30px"
+                                            src="/imgs/social-media/facebook.svg"
+                                        ></Image>
+                                    </Box>
+                                </Flex>
+                            </Box>
+                        ))}
+                    </Flex>
+                </Box>
+            </Card>
         </Box>
     )
 }

@@ -5,17 +5,31 @@ const GET_PROJECT = gql`
     query getProject($id: String!) {
         getProject(id: $id) {
             id
-            name
             createdAt
+            updatedAt
+            name
             owner {
                 id
             }
             contributors {
                 id
             }
-            status
             summary
             description
+            status
+            location {
+                id
+            }
+            remote
+            tags {
+                id
+                title
+                category
+                createdAt
+                updatedAt
+            }
+            picture
+            website
         }
     }
 `
