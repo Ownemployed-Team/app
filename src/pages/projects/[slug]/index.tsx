@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Layout from 'components/layout/Layout'
-import { Flex, Box, Stack, Heading, Tag } from '@chakra-ui/core'
-import Grid from 'components/common/Grid'
+import { Flex, Box, Heading } from 'rebass'
 import { Project } from 'generated/graphql'
 import Text from 'components/common/Text'
 import { FaMapMarkerAlt } from 'react-icons/fa'
@@ -10,6 +9,8 @@ import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import GET_PROJECT from 'graphql/get-project'
 import Loading from 'components/layout/Loading'
+import Grid from 'components/common/Grid'
+import Tag from 'components/common/Tag'
 
 function ProjectProfile() {
 
@@ -49,10 +50,10 @@ function ProjectProfile() {
     return (
         <Layout title="Explore | Ownemployed">
             {JSON.stringify(data)}
-            <Grid columns={[1, 2]}>
+            <Grid maxColumns={2} >
                 <ProjectDetails project={project} />
             </Grid>
-            <Grid columns={[1, null, 2]}>
+            <Grid maxColumns={2}>
                 <ProjectSummary project={project} />
                 <ProjectMembers project={project} />
             </Grid>
