@@ -1,14 +1,23 @@
+import React from 'react'
 import { Project } from 'generated/graphql'
-import Grid from 'components/common/Grid'
+import { Box, Flex } from 'rebass'
 import ProjectCard from 'components/projects/ProjectCard'
 
 const ProjectsList = ({ projects }: { projects: Project[] }) => {
     return (
-        <Grid>
+        <Flex flexWrap="wrap">
             {projects.map((project, index) => (
-                <ProjectCard project={project} key={index} />
+                <Box
+                    key={index}
+                    mr="auto"
+                    width={[1, 1 / 3, 1 / 4]}
+                    px={2}
+                    py={3}
+                >
+                    <ProjectCard project={project} />
+                </Box>
             ))}
-        </Grid>
+        </Flex>
     )
 }
 

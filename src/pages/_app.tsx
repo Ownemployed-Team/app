@@ -4,9 +4,9 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { useApollo } from 'hooks/useApollo'
 import { Auth0Provider } from '@auth0/auth0-react'
 import theme from 'config/theme'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Member } from 'generated/graphql'
-import { ThemeProvider, CSSReset } from '@chakra-ui/core'
+import { ThemeProvider } from 'emotion-theming'
 
 const onRedirectCallback = appState => {
     if (appState && appState.returnTo) {
@@ -34,7 +34,6 @@ function App({ Component, pageProps }) {
                 scope="self:read"
             >
                 <ThemeProvider theme={theme}>
-                    <CSSReset />
                     <Component {...pageProps} />
                 </ThemeProvider>
             </Auth0Provider>

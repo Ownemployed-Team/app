@@ -1,8 +1,7 @@
 import React from 'react'
 import Link from 'components/common/Link'
 //import MemberCard from 'components/members/MemberCard'
-import Grid from 'components/common/Grid'
-import { Box, Image, Badge } from '@chakra-ui/core'
+import { Box, Image, Flex } from 'rebass'
 import { Member } from 'generated/graphql'
 
 function MemberCard({ member }: { member: Member }) {
@@ -67,11 +66,11 @@ function MemberCard({ member }: { member: Member }) {
 
 const MembersList = ({ members }) => {
     return (
-        <Grid columns={[1, null, 3]}>
+        <Flex flexWrap="wrap">
             {members.map((member, index) => (
                 <MemberCard key={index} member={member} />
             ))}
-        </Grid>
+        </Flex>
     )
 }
 
