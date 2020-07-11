@@ -11,7 +11,6 @@ import { UpdateProjectInput, Project } from 'generated/graphql'
 import { useMutation } from '@apollo/react-hooks'
 import Text from 'components/common/Text'
 import ImageUploader from 'components/common/ImageUploader'
-import { Editable, EditableInput, EditablePreview, ButtonGroup, IconButton } from '@chakra-ui/core'
 
 const updateProjectMutation = gql`
     mutation UpdateProject($data: UpdateProjectInput!) {
@@ -42,13 +41,14 @@ const formInitialValues = {
 
  function EditableControls({ isEditing, onSubmit, onCancel, onRequestEdit }) {
     return isEditing ? (
-      <ButtonGroup justifyContent="center" size="sm">
-        <IconButton icon="check" onClick={onSubmit} />
-        <IconButton icon="close" onClick={onCancel} />
-      </ButtonGroup>
+        /*TODO: Make these have icons as they are replacing chakra IconButtons*/
+      <Flex justifyContent="center" size="sm">
+        <Button onClick={onSubmit}>Submit</Button>
+        <Button onClick={onCancel}>Cancel</Button>
+      </Flex>
     ) : (
-      <Flex justifyContent="center">
-        <IconButton size="sm" icon="edit" onClick={onRequestEdit} />
+      <Flex justifyContent="center" size="sm">
+          <Button onClick={onRequestEdit}>Edit</Button>
       </Flex>
     );
   }
@@ -87,21 +87,11 @@ export default () => {
                     {JSON.stringify(data?.updateProject ?? {})}
                 </Box>
                 <Box>
-                    <Editable
-      textAlign="center"
-      defaultValue="Rasengan ⚡️"
-      fontSize="2xl"
-      isPreviewFocusable={false}
-      submitOnBlur={false}
-    >
-      {props => (
-        <>
-          <EditablePreview />
-          <EditableInput />
-          <EditableControls {...props} />
-        </>
-      )}
-    </Editable>
+                    <Input
+                        id='edit'
+                        name='edit'
+                        defaultValue='Edit project data here'
+                    />
                 </Box>
             </Flex>
         </Layout>
