@@ -48,35 +48,36 @@ const activePage = css`
     background-color: #768598;
     color: white;
 `
-const Pagination = ({ items, handler, perPage = 10 }) => {
+const Pagination = ({ handler, pageIndex, perPage = 9, totalCount }) => {
     const pageSize = perPage
-    const pageCount = Math.ceil(items.length / pageSize)
+    const pageCount = Math.ceil(totalCount / pageSize)
     const handleWrapper = pageSize => data => handler(data, pageSize)
     return (
         <>
             <hr />
             <Flex justifyContent="space-between" width="100%">
                 <Box>
-                    <ItemsCount items={items} size={10} />
+                    <ItemsCount totalCount={totalCount} size={10} />
                 </Box>
                 <Box>
                     <ReactPaginate
-                        //onPageChange={data => handlePageClick(data, pageSize)}
-                        onPageChange={handleWrapper(pageSize)}
-                        className={pagination}
-                        previousClassName={pageChangeButton}
-                        nextClassName={pageChangeButton}
-                        previousLabel="<"
-                        nextLabel=">"
-                        breakLabel="..."
                         //breakClassName={pageBreak}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={5}
-                        containerClassName={paginationContainer}
-                        pageClassName={page}
-                        subContainerClassName={paginationSubContainer}
+                        //onPageChange={data => handlePageClick(data, pageSize)}
                         activeClassName={activePage}
+                        breakLabel="..."
+                        className={pagination}
+                        containerClassName={paginationContainer}
+                        forcePage={pageIndex}
+                        marginPagesDisplayed={2}
+                        nextClassName={pageChangeButton}
+                        nextLabel=">"
+                        onPageChange={handleWrapper(pageSize)}
+                        pageClassName={page}
+                        pageCount={pageCount}
+                        pageRangeDisplayed={5}
+                        previousClassName={pageChangeButton}
+                        previousLabel="<"
+                        subContainerClassName={paginationSubContainer}
                     />
                 </Box>
             </Flex>
