@@ -4,16 +4,21 @@ import { useAuth } from 'use-auth0-hooks'
 import ConfigContext from 'lib/hooks/useConfig'
 import { Box } from 'rebass'
 import { Formik, Form } from 'formik'
+
 import skillsData from 'data/skills.json'
 import locationsData from 'data/locations.json'
+
 import Card from 'components/common/Card'
 import Link from 'components/common/Link'
 import Text from 'components/common/Text'
-import * as Yup from 'yup'
+
+import Layout from 'components/layout/Layout'
+
 import AvatarImage from 'components/user/AvatarImage'
 import BasicInfo from 'components/user/BasicInfo'
 import DetailedInfo from 'components/user/DetailedInfo'
 import SubmitButton from 'components/user/SubmitButton'
+import * as Yup from 'yup'
 
 const CreateUserSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -39,8 +44,6 @@ const CreateUserSchema = Yup.object().shape({
 })
 
 const Profile = ({ match }) => {
-    return null
-    /*
     const [profileImage, setProfileImage] = useState('')
     const [avatarImage, setAvatarImage] = useState('')
     const [showResult, setShowResult] = useState(false)
@@ -188,104 +191,105 @@ const Profile = ({ match }) => {
     }
 
     return (
-        <Box mx={[0, 0, 7]} my={2}>
-            <Card
-                sx={{
-                    borderRadius: 0,
-                    mt: 4,
-                    padding: 4,
-                }}
-            >
-                <Box mx={[0, 0, 6]}>
-                    <Box>
-                        <Text as="h3">My Profile</Text>
+        <Layout title="Ownemployed | Create Project">
+            <Box mx={[0, 0, 7]} my={2}>
+                <Card
+                    sx={{
+                        borderRadius: 0,
+                        mt: 4,
+                        padding: 4,
+                    }}
+                >
+                    <Box mx={[0, 0, 6]}>
+                        <Box>
+                            <Text as="h3">My Profile</Text>
+                        </Box>
+                        <Box>
+                            <Text as="body">
+                                Help the Ownemployed community get to know you
+                                better.
+                            </Text>
+                        </Box>
+                        <hr />
+                        <Box>
+                            <Formik
+                                initialValues={{
+                                    bio: '',
+                                    education: '',
+                                    emailPrivacy: '',
+                                    facebook: '',
+                                    firstName: '',
+                                    headline: '',
+                                    lastName: '',
+                                    linkedin: '',
+                                    location: '',
+                                    sector: [],
+                                    skills: [],
+                                    twitter: '',
+                                    userType: 'true',
+                                    website: '',
+                                }}
+                                onSubmit={onSubmitSearch}
+                                validationSchema={CreateUserSchema}
+                            >
+                                {({
+                                    errors,
+                                    setFieldValue,
+                                    submitForm,
+                                    touched,
+                                    values,
+                                }) => (
+                                    <Form>
+                                        <Box>
+                                            <AvatarImage
+                                                avatarImage={avatarImage}
+                                                errors={errors}
+                                                normalInputField={
+                                                    defaultNormalInputFieldStyle
+                                                }
+                                                onUploadedImage={
+                                                    handleUploadedImage
+                                                }
+                                                touched={touched}
+                                            ></AvatarImage>
+                                            <BasicInfo
+                                                areaInputField={areaInputField}
+                                                errors={errors}
+                                                locationOptions={locationOptions}
+                                                selectField={
+                                                    defaultSelectFieldStyle
+                                                }
+                                                touched={touched}
+                                            ></BasicInfo>
+                                            <DetailedInfo
+                                                errors={errors}
+                                                defaultNormalInputFieldStyle={
+                                                    defaultNormalInputFieldStyle
+                                                }
+                                                onSetFieldValue={setFieldValue}
+                                                selectClass={selectClass}
+                                                skillsOptions={skillsOptions}
+                                                styles={styles}
+                                                touched={touched}
+                                                values={values}
+                                            ></DetailedInfo>
+                                            <SubmitButton
+                                                onSubmitForm={submitForm}
+                                            ></SubmitButton>
+                                        </Box>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </Box>
+                        {/* <Link href={`${match.url}/settings`}>Settings</Link> */}
+                        {showResult && (
+                            <code>{JSON.stringify(apiMessage, null, 2)}</code>
+                        )}
                     </Box>
-                    <Box>
-                        <Text as="body">
-                            Help the Ownemployed community get to know you
-                            better.
-                        </Text>
-                    </Box>
-                    <hr />
-                    <Box>
-                        <Formik
-                            initialValues={{
-                                bio: '',
-                                education: '',
-                                emailPrivacy: '',
-                                facebook: '',
-                                firstName: '',
-                                headline: '',
-                                lastName: '',
-                                linkedin: '',
-                                location: '',
-                                sector: [],
-                                skills: [],
-                                twitter: '',
-                                userType: 'true',
-                                website: '',
-                            }}
-                            onSubmit={onSubmitSearch}
-                            validationSchema={CreateUserSchema}
-                        >
-                            {({
-                                errors,
-                                setFieldValue,
-                                submitForm,
-                                touched,
-                                values,
-                            }) => (
-                                <Form>
-                                    <Box>
-                                        <AvatarImage
-                                            avatarImage={avatarImage}
-                                            errors={errors}
-                                            normalInputField={
-                                                defaultNormalInputFieldStyle
-                                            }
-                                            onUploadedImage={
-                                                handleUploadedImage
-                                            }
-                                            touched={touched}
-                                        ></AvatarImage>
-                                        <BasicInfo
-                                            areaInputField={areaInputField}
-                                            errors={errors}
-                                            locationOptions={locationOptions}
-                                            selectField={
-                                                defaultSelectFieldStyle
-                                            }
-                                            touched={touched}
-                                        ></BasicInfo>
-                                        <DetailedInfo
-                                            errors={errors}
-                                            defaultNormalInputFieldStyle={
-                                                defaultNormalInputFieldStyle
-                                            }
-                                            onSetFieldValue={setFieldValue}
-                                            selectClass={selectClass}
-                                            skillsOptions={skillsOptions}
-                                            styles={styles}
-                                            touched={touched}
-                                            values={values}
-                                        ></DetailedInfo>
-                                        <SubmitButton
-                                            onSubmitForm={submitForm}
-                                        ></SubmitButton>
-                                    </Box>
-                                </Form>
-                            )}
-                        </Formik>
-                    </Box>
-                    <Link href={`${match.url}/settings`}>Settings</Link>
-                    {showResult && (
-                        <code>{JSON.stringify(apiMessage, null, 2)}</code>
-                    )}
-                </Box>
-            </Card>
-        </Box>
+                </Card>
+            </Box>
+        </Layout>
     )
-    */
 }
 
 export default Profile
