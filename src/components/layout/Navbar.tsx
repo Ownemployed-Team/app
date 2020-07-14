@@ -66,7 +66,7 @@ export default function Navbar() {
     } = useAuth0()
 
     return (
-        <Flex className={links} px={5} py={2} bg="white" alignItems="center">
+        <Flex className={links} px={5} py={2} bg="white" alignItems="center" sx={{width:'100%'}}>
             <Brand />
             <Box mx="auto" />
             <Link href="/projects">Explore</Link>{' '}
