@@ -48,7 +48,7 @@ function MemberProfile() {
 
     return (
         <Layout title="Members | Ownemployed">
-            <Grid columns={[1, null, 2]}>
+            <Grid maxColumns = {2}>
                 <MemberDetails member={getMember} />
                 <Stack>
                     <MemberSummary member={getMember} />
