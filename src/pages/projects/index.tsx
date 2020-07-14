@@ -41,31 +41,6 @@ const Projects = () => {
         )
     }
 
-    const handlePageClick = (data, pageSize) => {
-        let selected = data.selected
-        let offset = Math.ceil(selected * pageSize)
-
-        // getProjectsQuery({
-        //     variables: {
-        //         ...(searchWord ? { name: searchWord }: undefined)
-        //         skip: offset,
-        //         limit: pageSize
-        //     }
-        // })
-    }
-
-    const handleScrollEnd = page => {
-        console.log('handleScrollEndOutside')
-        if (page !== 1) {
-            console.log('handleScrollEnd')
-            let offset = Math.ceil(pageIndex * 10) // 10 results each time user scrolls to end
-
-            // TODO : Add { variables: { sector, skills, location, status, skip, limit } }
-            getProjectsQuery()
-            setPageIndex(page)
-        }
-    }
-
     if (!called && !loading) {
         // TODO : Add { variables: { sector, skills, location, status, skip, limit } }
         getProjectsQuery()
