@@ -7,7 +7,7 @@ import { Input, Textarea } from '@rebass/forms'
 import Layout from 'components/layout/Layout'
 
 import { gql } from 'apollo-boost'
-import { UpdateProjectInput, Project } from 'generated/graphql'
+import { UpdateProjectInput, Project } from 'lib/generated/graphql'
 import { useMutation } from '@apollo/react-hooks'
 import Text from 'components/common/Text'
 import ImageUploader from 'components/common/ImageUploader'

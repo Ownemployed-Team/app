@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Member } from 'generated/graphql'
+import { Member } from 'lib/generated/graphql'
 
 import Layout from 'components/layout/Layout'
 import { Box, Heading, Image } from 'rebass'
@@ -9,7 +9,7 @@ import Text from 'components/common/Text'
 import Stack from 'components/common/Stack'
 import Tag from 'components/common/Tag'
 import { useRouter } from 'next/router'
-import GET_MEMBER from 'graphql/get-member'
+import GET_MEMBER from 'lib/graphql/get-member'
 import { useQuery } from '@apollo/react-hooks'
 
 function MemberProfile() {

@@ -1,31 +1,28 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { css } from 'emotion'
-import facepaint from 'facepaint'
-import { Text } from 'components/common/Text'
-import sectorData from 'data/sector.json'
-import locationsData from 'data/locations.json'
-import projectStatusData from 'data/project-status.json'
-import skillsData from 'data/skills.json'
-import Card from 'components/common/Card'
 import { Box, Flex } from 'rebass'
 import { Formik, Form, Field, FormikProps } from 'formik'
 import Select from 'react-select'
+import facepaint from 'facepaint'
 import theme from 'config/theme'
+
+import Card from 'components/common/Card'
+import { Text } from 'components/common/Text'
 
 const MemberFilter = ({ onSubmitSearch }: { onSubmitSearch: any }) => {
     const [sector, setSector] = useState([])
     const [skills, setSkills] = useState([])
     const [location, setLocation] = useState([])
 
-    const sectorOptions = sectorData.map(({ id, name }) => ({
+    const sectorOptions = [].map(({ id, name }) => ({
         value: id,
         label: name,
     }))
-    const skillsOptions = skillsData.map(({ id, name }) => ({
+    const skillsOptions = [].map(({ id, name }) => ({
         value: id,
         label: name,
     }))
-    const locationOptions = locationsData.map(({ id, name }) => ({
+    const locationOptions = [].map(({ id, name }) => ({
         value: id,
         label: name,
     }))

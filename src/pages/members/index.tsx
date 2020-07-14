@@ -4,7 +4,7 @@ import Layout from 'components/layout/Layout'
 
 import { Box } from 'rebass'
 import { useLazyQuery } from '@apollo/react-hooks'
-import { GET_MEMBERS } from 'graphql/get-members'
+import { GET_MEMBERS } from 'lib/graphql/get-members'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import Hero from 'components/members/Hero'

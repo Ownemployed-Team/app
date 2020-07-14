@@ -8,15 +8,15 @@ import Link from 'next/link'
 import { Flex, Box } from 'rebass'
 import Layout from 'components/layout/Layout'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import GET_ME from 'graphql/get-me'
-import { Member } from 'generated/graphql'
+import GET_ME from 'lib/graphql/get-me'
+import { Member } from 'lib/generated/graphql'
 
 import Text from 'components/common/Text'
 //import { useRegisterMember } from 'hooks/useRegisterMember'
-import { NewMemberInput } from 'generated/graphql'
+import { NewMemberInput } from 'lib/generated/graphql'
 import { ExecutionResult, StoreReader } from 'apollo-boost'
-import ADD_MEMBER from 'graphql/add-member'
-import { useAccessToken } from 'hooks/useAccessToken'
+import ADD_MEMBER from 'lib/graphql/add-member'
+import { useAccessToken } from 'lib/hooks/useAccessToken'
 
 //async function registerMember(data: NewMemberInput): ExecutionResult {
 //    try {

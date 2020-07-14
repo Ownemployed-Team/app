@@ -1,14 +1,14 @@
 import { ComponentClass, FunctionComponent, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Flex, Box, Card } from 'rebass'
+import { Flex, Box } from 'rebass'
 import Text from 'components/common/Text'
 import Layout from 'components/layout/Layout'
 import { useQuery } from '@apollo/react-hooks'
-import GET_PROJECTS from 'graphql/get-projects'
+import GET_PROJECTS from 'lib/graphql/get-projects'
 import ProjectsList from 'components/projects/ProjectsList'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
-import { Project } from 'generated/graphql'
+import { Project } from 'lib/generated/graphql'
 import Loading from 'components/layout/Loading'
 
 export const MyProjects = () => {

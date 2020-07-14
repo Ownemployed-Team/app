@@ -1,24 +1,13 @@
-import React from 'react'
-import { Project } from 'generated/graphql'
-import { Box, Flex } from 'rebass'
+import { Project } from 'lib/generated/graphql'
 import ProjectCard from 'components/projects/ProjectCard'
+import { Flex } from 'rebass'
+import { Gallery } from 'components/layout/Gallery'
 
 const ProjectsList = ({ projects }: { projects: Project[] }) => {
-    return (
-        <Flex flexWrap="wrap">
-            {projects.map((project, index) => (
-                <Box
-                    key={index}
-                    mr="auto"
-                    width={[1, 1 / 3, 1 / 4]}
-                    px={2}
-                    py={3}
-                >
-                    <ProjectCard project={project} />
-                </Box>
-            ))}
-        </Flex>
-    )
+    const list = projects.map((project, index) => (
+        <ProjectCard project={project} key={index} />
+    ))
+    return <Gallery items={list} />
 }
 
 export default ProjectsList

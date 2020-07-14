@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import Layout from 'components/layout/Layout'
 import { Flex, Box, Heading } from 'rebass'
-import { Project } from 'generated/graphql'
+import { Project } from 'lib/generated/graphql'
 import Text from 'components/common/Text'
-import { FaMapMarkerAlt } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import GET_PROJECT from 'graphql/get-project'
+import GET_PROJECT from 'lib/graphql/get-project'
 import Loading from 'components/layout/Loading'
 import Grid from 'components/common/Grid'
 import Tag from 'components/common/Tag'
@@ -46,17 +45,18 @@ function ProjectProfile() {
 
     //const canEdit = project.owner.id === userId
     const canEdit = true
+    return null
 
     return (
         <Layout title="Explore | Ownemployed">
             {JSON.stringify(data)}
-            <Grid maxColumns={2} >
+            <Flex>
                 <ProjectDetails project={project} />
-            </Grid>
-            <Grid maxColumns={2}>
+            </Flex>
+            <Flex>
                 <ProjectSummary project={project} />
                 <ProjectMembers project={project} />
-            </Grid>
+            </Flex>
         </Layout>
     )
 }
@@ -82,7 +82,7 @@ function ProjectDetails({ project }: { project: Project }) {
             </Box>
             <Box p={3}>
                 <Text>description</Text>
-                <Grid>lorem ipsum</Grid>
+                <Flex>lorem ipsum</Flex>
             </Box>
             <Box px={3} py={2}>
                 {sectors}
@@ -141,7 +141,7 @@ function ProjectMembers({ project }: { project: Project }) {
             </Box>
             <Box p={3}>
                 <Text>description</Text>
-                <Grid>lorem ipsum</Grid>
+                <Flex>lorem ipsum</Flex>
             </Box>
         </Box>
     )

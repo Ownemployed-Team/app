@@ -1,10 +1,10 @@
 import React from 'react'
 import Text from 'components/common/Text'
 
-const ItemsCount = ({ items, size }) => {
+const ItemsCount = ({ totalCount, size }) => {
     return (
         <Text>
-            Showing {size} of {items.length} results
+            Showing {size} of {totalCount} results
         </Text>
     )
 }

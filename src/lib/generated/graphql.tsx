@@ -42,11 +42,6 @@ export type QueryGetMemberArgs = {
 };
 
 
-export type QueryGetProjectsArgs = {
-  data?: Maybe<GetProjectsInput>;
-};
-
-
 export type QueryGetProjectArgs = {
   id?: Maybe<Scalars['String']>;
 };
@@ -121,13 +116,6 @@ export type SocialMedia = {
 export type GetMembersInput = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-};
-
-export type GetProjectsInput = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  owner?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -274,6 +262,14 @@ export type RemoveContributorsInput = {
   contributorIds: Array<Scalars['String']>;
 };
 
+export type MemberTagInput = {
+  id: Scalars['String'];
+};
+
+export type UpdateMemberTagInput = {
+  id: Scalars['String'];
+};
+
 export type AddMemberMutationVariables = Exact<{
   data?: Maybe<NewMemberInput>;
 }>;
@@ -358,10 +354,13 @@ export type GetMembersQuery = (
   { __typename?: 'Query' }
   & { getMembers?: Maybe<Array<Maybe<(
     { __typename?: 'Member' }
-    & Pick<Member, 'id' | 'firstName' | 'lastName' | 'bio' | 'location' | 'remote' | 'avatar'>
+    & Pick<Member, 'id' | 'firstName' | 'lastName' | 'email' | 'createdAt' | 'education' | 'bio' | 'location' | 'remote' | 'avatar'>
     & { tags?: Maybe<Array<Maybe<(
       { __typename?: 'Tag' }
       & Pick<Tag, 'id' | 'title' | 'category'>
+    )>>>, socialMedia?: Maybe<Array<Maybe<(
+      { __typename?: 'SocialMedia' }
+      & Pick<SocialMedia, 'name' | 'url'>
     )>>> }
   )>>> }
 );
@@ -572,6 +571,9 @@ export const GetMembersDocument = gql`
     id
     firstName
     lastName
+    email
+    createdAt
+    education
     bio
     location
     remote
@@ -579,6 +581,10 @@ export const GetMembersDocument = gql`
       id
       title
       category
+    }
+    socialMedia {
+      name
+      url
     }
     avatar
   }

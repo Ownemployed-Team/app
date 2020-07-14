@@ -5,9 +5,9 @@ import Text from 'components/common/Text'
 import Button from 'components/common/Button'
 import Layout from 'components/layout/Layout'
 import Loading from 'components/layout/Loading'
-import ADD_PROJECT from 'graphql/add-project'
+import ADD_PROJECT from 'lib/graphql/add-project'
 import { useMutation, useQuery } from '@apollo/react-hooks'
-import { NewProjectInput, Member } from 'generated/graphql'
+import { NewProjectInput, Member } from 'lib/generated/graphql'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
 let count = 0
