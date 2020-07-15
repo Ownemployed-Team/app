@@ -6,7 +6,7 @@ import { Project } from 'lib/generated/graphql'
 const fillIn = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad distinctio sint porro vel necessitatibus unde repellendus quos molestiae. Deserunt iusto non amet enim maxime laudantium sed iste quas possimus quaerat!'
 
 const ProjectCard = ({ project }: { project: Project }) => {
-    const { id, name, description, picture, summary } = project
+    const { description, id, name, picture, summary } = project
 
     // TODO : wait till cloudinary images is in database and use picture instead of hardcoded image.
     const avatar =

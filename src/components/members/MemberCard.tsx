@@ -2,7 +2,7 @@ import React from 'react'
 import Card from 'components/common/Card'
 import Link from 'next/link'
 import Text from 'components/common/Text'
-//import { Box, Image } from 'rebass'
+import { Box, Image } from 'rebass'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { Member } from 'lib/generated/graphql'
 
@@ -63,9 +63,9 @@ const MemberCard = ({
 
             <Box p="6">
                 <Box d="flex" alignItems="baseline">
-                    <Badge rounded="full" px="2" variantColor="teal">
+                    {/* <Badge rounded="full" px="2" variantColor="teal">
                         New
-                    </Badge>
+                    </Badge> */}
                     <Box
                         color="gray.500"
                         fontWeight="semibold"

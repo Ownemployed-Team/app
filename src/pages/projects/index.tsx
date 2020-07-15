@@ -18,6 +18,7 @@ const Projects = () => {
     const [count, setCount] = useState(29)  //TODO: change to total page count from server.
     const [items, setItems] = useState<number[]>([])
 
+
     const [searchWord, setSearchWord] = useState()
 
     const [getProjectsQuery, result] = useLazyQuery(GET_PROJECTS)

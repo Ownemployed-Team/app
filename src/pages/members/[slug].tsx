@@ -3,10 +3,11 @@ import Link from 'next/link'
 import { Member } from 'lib/generated/graphql'
 
 import Layout from 'components/layout/Layout'
-import { Flex, Box, Stack, Heading, Tag, Avatar } from '@chakra-ui/core'
+import { Box, Heading, Image } from 'rebass'
 import Grid from 'components/common/Grid'
 import Text from 'components/common/Text'
-import { FaMapMarkerAlt } from 'react-icons/fa'
+import Stack from 'components/common/Stack'
+import Tag from 'components/common/Tag'
 import { useRouter } from 'next/router'
 import GET_MEMBER from 'lib/graphql/get-member'
 import { useQuery } from '@apollo/react-hooks'
@@ -47,7 +48,7 @@ function MemberProfile() {
 
     return (
         <Layout title="Members | Ownemployed">
-            <Grid columns={[1, null, 2]}>
+            <Grid maxColumns = {2}>
                 <MemberDetails member={getMember} />
                 <Stack>
                     <MemberSummary member={getMember} />
@@ -70,7 +71,7 @@ function MemberDetails({ member }: { member: Member }) {
         w={['100%', '80%']} mt={4} p={4}>
             <Stack>
                 <Box p={3} textAlign="center">
-                    <Avatar borderRadius="100%" name={name} />
+                    <Image variant = 'avatar' borderRadius="100%" name={name} />
                     <Text>Member role</Text>
                     <Heading fontSize="h3">{name}</Heading>
                 </Box>

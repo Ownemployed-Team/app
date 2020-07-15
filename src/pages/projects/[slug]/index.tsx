@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import GET_PROJECT from 'lib/graphql/get-project'
 import Loading from 'components/layout/Loading'
+import Grid from 'components/common/Grid'
+import Tag from 'components/common/Tag'
 
 function ProjectProfile() {
 
