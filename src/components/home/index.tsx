@@ -1,0 +1,6 @@
+export {Hero} from './Hero'
+export {Actions} from './Actions'
+export {Initiative} from './Initiative'
+export {Skills} from './Skills'
+export {Reasons } from './Reasons'
+export { CallToAction} from './CallToAction'

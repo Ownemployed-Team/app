@@ -104,6 +104,7 @@ a:active {
     text-decoration: none;
 }
 
+/*TODO: The following @ appears to be identical to one above*/
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
     * {
@@ -129,4 +130,55 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+}
+
+/* THE FOLLOWING CODE IS FROM THE DEFUNCT GLOBAL.CSS FILE*/
+/* Some duplicate code has been removed*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video{
+    margin: 0;
+	padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+
+body{
+    min-height: 100vh;
+    background-color: #f7f8fc;
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+    line-height: 1;
+    width: 100%;
+}
+
+/* This appears to be very similar to a statement in the first section,
+but with wider scope?*/
+ol, ul {
+	list-style: none;
+}
+
+/* Make images easier to work with */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+main{
+    /* background: plum; */
+    margin-top:24px ;
 }
