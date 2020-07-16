@@ -20,6 +20,7 @@ export const Footer = ({ ...props }) => {
                 fontFamily: 'body',
                 width: '100%',
             }}
+            flexDirection={['column', 'row']}
             {...props}
         >
             <Box mr={4}>

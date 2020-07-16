@@ -7,8 +7,9 @@ type LinkProps = {
     props?: any
     style?: object
     sx?: any
-    href: string
+    href?: string
     variant?: string
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
 export const Link: FunctionComponent<LinkProps> = ({
@@ -16,8 +17,13 @@ export const Link: FunctionComponent<LinkProps> = ({
     href,
     variant,
     sx,
+    onClick,
     ...props
 }) => {
+    if (onClick) {
+        return <a href="#" onClick={onClick}>{children}</a>
+    }
+
     if (href.startsWith('http') || href.startsWith('mailto')) {
         return <a>{children}</a>
     } else {

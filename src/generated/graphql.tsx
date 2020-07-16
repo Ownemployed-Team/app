@@ -386,23 +386,35 @@ export type GetProjectQuery = (
   )> }
 );
 
-export type GetProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProjectsQueryVariables = Exact<{
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  owner?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+}>;
 
 
 export type GetProjectsQuery = (
   { __typename?: 'Query' }
   & { getProjects?: Maybe<Array<Maybe<(
     { __typename?: 'Project' }
-    & Pick<Project, 'id' | 'name' | 'createdAt' | 'summary' | 'description' | 'status' | 'website' | 'remote' | 'picture'>
+    & Pick<Project, 'id' | 'createdAt' | 'updatedAt' | 'name' | 'summary' | 'description' | 'status' | 'remote' | 'picture' | 'website'>
     & { owner: (
       { __typename?: 'Member' }
-      & Pick<Member, 'id'>
-    ), tags?: Maybe<Array<Maybe<(
+      & Pick<Member, 'id' | 'firstName' | 'lastName' | 'name' | 'email' | 'createdAt' | 'updatedAt' | 'headline' | 'education' | 'bio' | 'location' | 'remote' | 'avatar' | 'website'>
+      & { socialMedia?: Maybe<Array<Maybe<(
+        { __typename?: 'SocialMedia' }
+        & Pick<SocialMedia, 'id' | 'name' | 'url' | 'createdAt' | 'updatedAt'>
+      )>>> }
+    ), contributors?: Maybe<Array<Maybe<(
+      { __typename?: 'Member' }
+      & Pick<Member, 'id' | 'firstName' | 'lastName' | 'name'>
+    )>>>, location?: Maybe<Array<Maybe<(
+      { __typename?: 'Location' }
+      & Pick<Location, 'id' | 'name'>
+    )>>>, tags?: Maybe<Array<Maybe<(
       { __typename?: 'Tag' }
       & Pick<Tag, 'id' | 'title' | 'category'>
-    )>>>, contributors?: Maybe<Array<Maybe<(
-      { __typename?: 'Member' }
-      & Pick<Member, 'id'>
     )>>> }
   )>>> }
 );
@@ -643,28 +655,56 @@ export function withGetProject<TProps, TChildProps = {}, TDataName extends strin
 };
 export type GetProjectQueryResult = ApolloReactCommon.QueryResult<GetProjectQuery, GetProjectQueryVariables>;
 export const GetProjectsDocument = gql`
-    query getProjects {
-  getProjects {
+    query getProjects($skip: Int, $limit: Int, $owner: String, $name: String) {
+  getProjects(data: {skip: $skip, limit: $limit, owner: $owner, name: $name}) {
     id
-    name
     createdAt
+    updatedAt
+    name
     owner {
       id
+      firstName
+      lastName
+      name
+      email
+      createdAt
+      updatedAt
+      headline
+      education
+      bio
+      location
+      remote
+      socialMedia {
+        id
+        name
+        url
+        createdAt
+        updatedAt
+      }
+      avatar
+      website
+    }
+    contributors {
+      id
+      firstName
+      lastName
+      name
     }
     summary
     description
     status
-    website
+    location {
+      id
+      name
+    }
     remote
     tags {
       id
       title
       category
     }
-    contributors {
-      id
-    }
     picture
+    website
   }
 }
     `;

@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { Flex, Box } from 'rebass'
 import CookieConsent from 'react-cookie-consent'
 
-import Navbar from 'components/layout/Navbar'
+import Navbar from 'components/layout/navigation/Navbar'
 import Footer from 'components/layout/Footer'
 import { useEffect } from 'react'
 

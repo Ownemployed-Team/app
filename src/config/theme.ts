@@ -16,6 +16,7 @@ export default {
         primary: '#6F63AD',
         primaryHover: '#D0CDE1',
         primaryLight: '#6E6895',
+        primaryDark: '#625B89',
         secondary: '#124780',
         secondaryHover: '#FFE180',
         alert: '#FF5252',
