@@ -29,7 +29,7 @@
         "apollo-link-http": "^1.5.17",
         "apollo-link-schema": "^1.2.5",
         "apollo-server-micro": "^2.14.4",
-        "class-validator": "^0.12.2",
+        "class-validator": "^0.14.0",
         "dataloader": "^2.0.0",
         "emotion": "^10.0.27",
         "emotion-theming": "^10.0.27",
